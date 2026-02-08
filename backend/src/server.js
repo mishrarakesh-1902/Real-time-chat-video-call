@@ -18,24 +18,36 @@ app.use(cookieParser());
 /* =====================
    CORS CONFIG
 ===================== */
-// Calculate the correct origin for CORS
-const getCorsOrigin = () => {
-  if (ENV.CLIENT_URL) {
-    // Production or when CLIENT_URL is set
+// List of allowed origins for CORS
+const allowedOrigins = [
+  "http://localhost:5173", // Development
+  "https://real-time-chat-video-call-1.onrender.com", // Frontend production
+  "https://real-time-chat1-8hhq.onrender.com", // Backend production (if needed)
+];
+
+const getCorsOrigin = (req) => {
+  const requestOrigin = req.headers.origin;
+  
+  // Check if the request origin is in our allowed list
+  if (allowedOrigins.includes(requestOrigin)) {
+    return requestOrigin;
+  }
+  
+  // Fallback to CLIENT_URL env var if set
+  if (ENV.CLIENT_URL && allowedOrigins.includes(ENV.CLIENT_URL)) {
     return ENV.CLIENT_URL;
   }
   
-  // Development fallback - allow localhost
-  if (ENV.NODE_ENV !== "production") {
-    return "http://localhost:5173";
+  // If in production and no match, return the request origin anyway
+  if (ENV.NODE_ENV === "production") {
+    return requestOrigin || true;
   }
   
-  // Production without CLIENT_URL - this is problematic, but we try the request origin
-  return true; // Allow any origin but credentials will still work
+  return "http://localhost:5173";
 };
 
 app.use(cors({
-  origin: getCorsOrigin(),
+  origin: getCorsOrigin,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],

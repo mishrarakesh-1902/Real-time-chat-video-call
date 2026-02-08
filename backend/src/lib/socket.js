@@ -20,14 +20,16 @@ app.use(express.json({ limit: "5mb" }));
    ALLOWED ORIGINS
 ===================== */
 const allowedOrigins = (() => {
-  if (ENV.NODE_ENV === "production") {
-    // In production, require CLIENT_URL for credentials to work
-    // If not set, socket connections will fail - this is intentional
-    return ENV.CLIENT_URL ? [ENV.CLIENT_URL] : [];
+  const origins = [
+    "http://localhost:5173", // Development
+    "https://real-time-chat-video-call-1.onrender.com", // Frontend production
+  ];
+  
+  // Add CLIENT_URL if it's set and not already in the list
+  if (ENV.CLIENT_URL && !origins.includes(ENV.CLIENT_URL)) {
+    origins.push(ENV.CLIENT_URL);
   }
-  // In development, allow localhost
-  const origins = ["http://localhost:5173"];
-  if (ENV.CLIENT_URL) origins.push(ENV.CLIENT_URL);
+  
   return origins;
 })();
 
