@@ -1,7 +1,6 @@
 import path from "path";
 import express from "express";
 import cookieParser from "cookie-parser";
-import cors from "cors";
 
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
@@ -16,42 +15,9 @@ app.use(express.json({ limit: "5mb" }));
 app.use(cookieParser());
 
 /* =====================
-   CORS CONFIG
+   CORS is already configured in socket.js
+   No need to duplicate it here
 ===================== */
-// List of allowed origins for CORS
-const allowedOrigins = [
-  "http://localhost:5173", // Development
-  "https://real-time-chat-video-call-1.onrender.com", // Frontend production
-  "https://real-time-chat1-8hhq.onrender.com", // Backend production (if needed)
-];
-
-const getCorsOrigin = (req) => {
-  const requestOrigin = req.headers.origin;
-  
-  // Check if the request origin is in our allowed list
-  if (allowedOrigins.includes(requestOrigin)) {
-    return requestOrigin;
-  }
-  
-  // Fallback to CLIENT_URL env var if set
-  if (ENV.CLIENT_URL && allowedOrigins.includes(ENV.CLIENT_URL)) {
-    return ENV.CLIENT_URL;
-  }
-  
-  // If in production and no match, return the request origin anyway
-  if (ENV.NODE_ENV === "production") {
-    return requestOrigin || true;
-  }
-  
-  return "http://localhost:5173";
-};
-
-app.use(cors({
-  origin: getCorsOrigin,
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
 
 /* =====================
    HEALTH CHECK

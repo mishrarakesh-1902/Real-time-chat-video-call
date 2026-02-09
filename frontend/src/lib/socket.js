@@ -16,6 +16,9 @@ export const socket = io(SOCKET_URL, {
   reconnectionDelayMax: 5000,
   timeout: 10000, // 10 second timeout
 
+  // Transport options - ensure WebSocket and HTTP-polling work
+  transports: ["websocket", "polling"],
+
   // Pass token in auth object for socket.io
   auth: {
     token: null,

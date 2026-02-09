@@ -68,7 +68,10 @@ const io = new Server(server, {
   cors: {
     origin: corsOriginCheck,
     credentials: true,
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   },
+  transports: ["websocket", "polling"],
 });
 
 /* =====================
