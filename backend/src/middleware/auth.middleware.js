@@ -2,6 +2,25 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { ENV } from "../lib/env.js";
 
+/*
+  Extract token from cookies OR Authorization header
+  Supports both cookie-based and header-based auth
+*/
+const extractToken = (req) => {
+  // Try cookies first
+  if (req.cookies?.jwt) {
+    return req.cookies.jwt;
+  }
+  
+  // Try Authorization header (Bearer token)
+  const authHeader = req.headers.authorization;
+  if (authHeader?.startsWith("Bearer ")) {
+    return authHeader.slice(7);
+  }
+  
+  return null;
+};
+
 export const protectRoute = async (req, res, next) => {
   try {
     // 🔐 Ensure JWT secret exists
@@ -12,8 +31,8 @@ export const protectRoute = async (req, res, next) => {
       });
     }
 
-    // 🍪 Read JWT from cookies
-    const token = req.cookies?.jwt;
+    // 🍪 Extract JWT from cookies or header
+    const token = extractToken(req);
 
     if (!token) {
       return res.status(401).json({

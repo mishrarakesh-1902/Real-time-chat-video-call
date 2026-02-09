@@ -18,20 +18,19 @@ app.use(express.json({ limit: "5mb" }));
 
 /* =====================
    ALLOWED ORIGINS
+   IMPORTANT: Frontend and backend should use the SAME domain for cookies to work
+   - This backend URL: https://real-time-chat-video-call-3n4r.onrender.com
+   - Frontend axios/socket should use: https://real-time-chat-video-call-3n4r.onrender.com
 ===================== */
-const allowedOrigins = (() => {
-  const origins = [
-    "http://localhost:5173", // Development
-    "https://real-time-chat-video-call-1.onrender.com", // Frontend production
-  ];
-  
-  // Add CLIENT_URL if it's set and not already in the list
-  if (ENV.CLIENT_URL && !origins.includes(ENV.CLIENT_URL)) {
-    origins.push(ENV.CLIENT_URL);
-  }
-  
-  return origins;
-})();
+const allowedOrigins = [
+  "http://localhost:5173", // Development
+  "https://real-time-chat-video-call-3n4r.onrender.com", // Production (both frontend & backend)
+];
+
+// Add CLIENT_URL if it's set and different (for separate frontend deployments)
+if (ENV.CLIENT_URL && !allowedOrigins.includes(ENV.CLIENT_URL)) {
+  allowedOrigins.push(ENV.CLIENT_URL);
+}
 
 /* =====================
    CORS CHECK HELPER
@@ -43,10 +42,8 @@ const corsOriginCheck = (origin, callback) => {
   // Allow if origin is in allowed list
   if (allowedOrigins.includes(origin)) return callback(null, true);
   
-  // In production without CLIENT_URL, deny all origins (credentials won't work anyway)
-  if (ENV.NODE_ENV === "production" && !ENV.CLIENT_URL) {
-    return callback(new Error("CORS not allowed - CLIENT_URL not configured"));
-  }
+  // Allow Render's internal requests and any .onrender.com subdomain
+  if (origin.includes(".onrender.com")) return callback(null, true);
   
   return callback(new Error("CORS not allowed"));
 };
@@ -109,7 +106,7 @@ io.on("connection", (socket) => {
 
   /* ==================================================
      VIDEO CALL SIGNALING
-  ================================================== */
+   ================================================== */
 
   // 1️⃣ CALL INITIATE
   socket.on("video-call:initiate", ({ toUserId }) => {
@@ -205,7 +202,7 @@ io.on("connection", (socket) => {
 
   /* =====================
      DISCONNECT
-  ===================== */
+   ===================== */
   socket.on("disconnect", () => {
     console.log("❌ Socket disconnected:", user.fullName);
 
