@@ -1,24 +1,9 @@
-// import axios from "axios";
-
-// export const axiosInstance = axios.create({
-//   baseURL: import.meta.env.MODE === "development" ? "https://real-time-chat1-8hhq.onrender.com/api" : "/api",
-//   withCredentials: true,
-// });
-
-
-// import axios from "axios";
-
-// export const axiosInstance = axios.create({
-//   baseURL: "https://real-time-chat1-8hhq.onrender.com/api",
-//   withCredentials: true,
-// });
-
 import axios from "axios";
 
 // Use environment variable for API URL, fallback to localhost or production URL
 const API_URL = import.meta.env.VITE_API_URL || (
   import.meta.env.PROD
-    ? "https://real-time-chat1-8hhq.onrender.com"
+    ? "https://real-time-chat-video-call-3n4r.onrender.com"
     : "http://localhost:3000"
 );
 

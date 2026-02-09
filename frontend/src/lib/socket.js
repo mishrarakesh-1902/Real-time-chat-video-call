@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 // Use environment variable for Socket URL, fallback to localhost or production URL
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || (
   import.meta.env.PROD
-    ? "https://real-time-chat1-8hhq.onrender.com"
+    ? "https://real-time-chat-video-call-3n4r.onrender.com"
     : "http://localhost:3000"
 );
 
