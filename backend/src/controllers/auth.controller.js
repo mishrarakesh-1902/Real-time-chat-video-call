@@ -52,13 +52,14 @@ export const signup = async (req, res) => {
     });
 
     // ✅ issue JWT cookie
-    generateToken(newUser._id, res);
+    const token = generateToken(newUser._id, res);
 
     res.status(201).json({
       _id: newUser._id,
       fullName: newUser.fullName,
       email: newUser.email,
       profilePic: newUser.profilePic,
+      token, // Return token for localStorage fallback
     });
 
     // send welcome email (non-blocking)
@@ -106,13 +107,14 @@ export const login = async (req, res) => {
     }
 
     // issue JWT cookie
-    generateToken(user._id, res);
+    const token = generateToken(user._id, res);
 
     res.status(200).json({
       _id: user._id,
       fullName: user.fullName,
       email: user.email,
       profilePic: user.profilePic,
+      token, // Return token for localStorage fallback
     });
   } catch (error) {
     console.error("Error in login controller:", error);

@@ -1425,7 +1425,7 @@ import { io } from "socket.io-client";
 const SOCKET_URL =
   window.location.hostname === "localhost"
     ? "http://localhost:3000"
-    : "https://real-time-chat1-8hhq.onrender.com";
+    : "https://real-time-chat-video-call-3n4r.onrender.com";
 
 export const useAuthStore = create((set, get) => ({
   /* ================= AUTH ================= */
@@ -1464,6 +1464,12 @@ export const useAuthStore = create((set, get) => ({
     set({ isSigningUp: true });
     try {
       const res = await axiosInstance.post("/auth/signup", data);
+      
+      // Store token in localStorage for cross-domain auth fallback
+      if (res.data.token) {
+        localStorage.setItem("authToken", res.data.token);
+      }
+      
       set({ authUser: res.data });
       get().connectSocket();
       toast.success("Account created");
@@ -1478,6 +1484,12 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/auth/login", data);
+      
+      // Store token in localStorage for cross-domain auth fallback
+      if (res.data.token) {
+        localStorage.setItem("authToken", res.data.token);
+      }
+      
       set({ authUser: res.data });
       get().connectSocket();
       toast.success("Logged in");
@@ -1500,6 +1512,12 @@ export const useAuthStore = create((set, get) => ({
     if (get().socket?.connected) return;
 
     const s = io(SOCKET_URL, { withCredentials: true });
+
+    // Get token from localStorage for cross-domain auth
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      s.auth.token = token;
+    }
 
     s.on("getOnlineUsers", (users) => set({ onlineUsers: users }));
 
@@ -1533,6 +1551,7 @@ export const useAuthStore = create((set, get) => ({
   },
 
   disconnectSocket: () => {
+    localStorage.removeItem("authToken");
     get().socket?.disconnect();
     set({ socket: null, onlineUsers: [] });
   },
