@@ -1422,10 +1422,17 @@ import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
 import { io } from "socket.io-client";
 
-const SOCKET_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:3000"
-    : "https://real-time-chat-video-call-3n4r.onrender.com";
+// Get socket URL from environment or fallback based on environment
+const getSocketUrl = () => {
+  if (import.meta.env.VITE_SOCKET_URL) {
+    return import.meta.env.VITE_SOCKET_URL;
+  }
+  return import.meta.env.PROD
+    ? "https://real-time-chat-video-call-1.onrender.com"
+    : "http://localhost:3000";
+};
+
+const SOCKET_URL = getSocketUrl();
 
 export const useAuthStore = create((set, get) => ({
   /* ================= AUTH ================= */
@@ -1511,7 +1518,33 @@ export const useAuthStore = create((set, get) => ({
   connectSocket: () => {
     if (get().socket?.connected) return;
 
-    const s = io(SOCKET_URL, { withCredentials: true });
+    const s = io(SOCKET_URL, { 
+      withCredentials: true,
+      timeout: 30000,
+      reconnectionAttempts: 5,
+    });
+
+    // Connection error handling
+    s.on("connect_error", (error) => {
+      console.error("Socket connection error:", error.message);
+      if (error.message.includes("CORS")) {
+        toast.error("Connection blocked by CORS policy. Check server configuration.");
+      } else if (error.message.includes("timeout")) {
+        toast.error("Connection timeout. Please check your network.");
+      }
+    });
+
+    s.on("connect", () => {
+      console.log("Socket connected successfully");
+    });
+
+    s.on("disconnect", (reason) => {
+      console.log("Socket disconnected:", reason);
+      if (reason === "io server disconnect") {
+        // Server initiated disconnect, try to reconnect
+        s.connect();
+      }
+    });
 
     // Get token from localStorage for cross-domain auth
     const token = localStorage.getItem("authToken");

@@ -1,12 +1,20 @@
 import { io } from "socket.io-client";
 
-// Use environment variable for Socket URL, fallback to localhost or production URL
+// Use environment variable for Socket URL, Fallback to localhost or production URL
 // IMPORTANT: This must match the backend URL in socket.js CORS configuration
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || (
-  import.meta.env.PROD
-    ? "https://real-time-chat-video-call-3n4r.onrender.com"
-    : "http://localhost:3000"
-);
+// Check VITE_SOCKET_URL first, then fallback based on environment
+const getSocketUrl = () => {
+  // If VITE_SOCKET_URL is explicitly set, use it
+  if (import.meta.env.VITE_SOCKET_URL) {
+    return import.meta.env.VITE_SOCKET_URL;
+  }
+  // Otherwise, fallback based on environment
+  return import.meta.env.PROD
+    ? "https://real-time-chat-video-call-1.onrender.com"
+    : "http://localhost:3000";
+};
+
+const SOCKET_URL = getSocketUrl();
 
 export const socket = io(SOCKET_URL, {
   autoConnect: false,
@@ -15,7 +23,7 @@ export const socket = io(SOCKET_URL, {
   reconnectionAttempts: 5,
   reconnectionDelay: 1000,
   reconnectionDelayMax: 5000,
-  timeout: 10000, // 10 second timeout
+  timeout: 30000, // Increased to 30 seconds for production reliability
 
   // Transport options - ensure WebSocket and HTTP-polling work
   transports: ["websocket", "polling"],
