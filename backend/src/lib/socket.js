@@ -63,6 +63,7 @@ app.use(
 
 /* =====================
    SOCKET.IO
+   Improved for Render free tier cold starts
 ===================== */
 const io = new Server(server, {
   cors: {
@@ -72,6 +73,10 @@ const io = new Server(server, {
     allowedHeaders: ["Content-Type", "Authorization"],
   },
   transports: ["websocket", "polling"],
+  pingTimeout: 60000,        // 60s timeout for pong
+  pingInterval: 25000,       // 25s ping interval
+  allowUpgrades: true,
+  perMessageDeflate: false,   // Disable compression for stability
 });
 
 /* =====================
@@ -90,15 +95,63 @@ export function getReceiverSocketId(userId) {
 
 /* =====================
    SOCKET EVENTS
+   Handle unauthenticated connections gracefully for cold starts
 ===================== */
 io.on("connection", (socket) => {
   const userId = socket.userId;
   const user = socket.user;
 
+  // Log connection attempt
+  console.log(`🔌 Socket connected: userId=${userId}, connected=${socket.connected}`);
+
+  // If no userId, this is an unauthenticated connection
+  // Don't disconnect immediately - allow re-authentication
   if (!userId || !user) {
-    console.warn("⚠️ Socket connected without user");
-    socket.disconnect();
-    return;
+    console.warn("⚠️ Socket connected without authentication - waiting for auth");
+    
+    // Set a timeout to disconnect unauthenticated sockets
+    const authTimeout = setTimeout(() => {
+      if (!socket.userId && socket.connected) {
+        console.warn("⚠️ Unauthenticated socket timed out - disconnecting");
+        socket.disconnect();
+      }
+    }, 30000); // 30 seconds to authenticate
+
+    // Allow re-authentication via event
+    socket.on("authenticate", async (token) => {
+      clearTimeout(authTimeout);
+      try {
+        const jwt = await import("jsonwebtoken");
+        const decoded = jwt.default.verify(token, ENV.JWT_SECRET);
+        const User = await import("../models/User.js");
+        const authenticatedUser = await User.default.findById(decoded.userId).select("_id fullName profilePic");
+        
+        if (authenticatedUser && socket.connected) {
+          socket.user = authenticatedUser;
+          socket.userId = authenticatedUser._id.toString();
+          console.log("✅ Socket re-authenticated:", authenticatedUser.fullName);
+          
+          // Track online user
+          userSocketMap.set(socket.userId, socket.id);
+          io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
+        } else if (socket.connected) {
+          socket.disconnect();
+        }
+      } catch (error) {
+        console.error("Socket re-authentication failed:", error.message);
+        if (socket.connected) {
+          socket.disconnect();
+        }
+      }
+    });
+
+    // Handle disconnect for unauthenticated socket
+    socket.on("disconnect", (reason) => {
+      console.log("❌ Unauthenticated socket disconnected:", reason);
+      clearTimeout(authTimeout);
+    });
+
+    return; // Don't proceed with authenticated-only features
   }
 
   console.log("✅ Socket connected:", user.fullName);
@@ -109,7 +162,7 @@ io.on("connection", (socket) => {
 
   /* ==================================================
      VIDEO CALL SIGNALING
-   ================================================== */
+    ================================================== */
 
   // 1️⃣ CALL INITIATE
   socket.on("video-call:initiate", ({ toUserId }) => {
@@ -205,16 +258,15 @@ io.on("connection", (socket) => {
 
   /* =====================
      DISCONNECT
-   ===================== */
-  socket.on("disconnect", () => {
-    console.log("❌ Socket disconnected:", user.fullName);
+    ===================== */
+  socket.on("disconnect", (reason) => {
+    console.log(`❌ Socket disconnected: ${user?.fullName || 'unknown'}, reason: ${reason}`);
 
-    // Remove only if same socket
-    if (userSocketMap.get(userId) === socket.id) {
+    // Only update user map if this was an authenticated user with matching socket
+    if (userId && userSocketMap.get(userId) === socket.id) {
       userSocketMap.delete(userId);
+      io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
     }
-
-    io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
   });
 });
 

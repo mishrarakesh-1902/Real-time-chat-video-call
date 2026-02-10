@@ -36,9 +36,11 @@ export const socketAuthMiddleware = async (socket, next) => {
     }
 
     if (!token) {
-      return next(
-        new Error("Unauthorized - No token provided")
-      );
+      // Allow connection without token - frontend will authenticate later
+      console.log("🔌 Socket connected without token (will authenticate later)");
+      socket.user = null;
+      socket.userId = null;
+      return next();
     }
 
     let decoded;
