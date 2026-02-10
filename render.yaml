@@ -1,0 +1,56 @@
+# Render Blueprint Configuration
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: realtime-chat
+    env: node
+    buildCommand: |
+      npm install
+      cd backend && npm install
+      cd ../frontend && npm install && npm run build
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: MONGO_URI
+        fromDatabase:
+          name: mongodb-render
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        value: https://your-render-app-name.onrender.com
+      - key: RESEND_API_KEY
+        fromSecret:
+          name: resend-api-key
+          property: value
+      - key: CLOUDINARY_CLOUD_NAME
+        fromSecret:
+          name: cloudinary-credentials
+          property: cloudName
+      - key: CLOUDINARY_API_KEY
+        fromSecret:
+          name: cloudinary-credentials
+          property: apiKey
+      - key: CLOUDINARY_API_SECRET
+        fromSecret:
+          name: cloudinary-credentials
+          property: apiSecret
+      - key: ARCJET_KEY
+        fromSecret:
+          name: arcjet-key
+          property: value
+
+databases:
+  - name: mongodb-render
+    plan: free
+    databaseName: realtime_chat
+    user: realtime_chat_user
+
+secrets:
+  - name: resend-api-key
+  - name: cloudinary-credentials
+  - name: arcjet-key

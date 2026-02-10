@@ -1,12 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   build: {
-    sourcemap: false, // Disable sourcemaps in production for smaller bundles
-    minify: 'terser', // Use terser for better minification
+    sourcemap: false,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: {
@@ -20,7 +25,9 @@ export default defineConfig({
     port: 5173,
     host: true,
   },
-  define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
   },
 })
