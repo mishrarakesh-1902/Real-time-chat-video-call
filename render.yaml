@@ -1,20 +1,16 @@
-# Render Blueprint Configuration
-# https://render.com/docs/blueprint-spec
-
 services:
   - type: web
-    name: realtime-chat
+    name: realtime-chat-backend
     env: node
     buildCommand: |
-      npm install
-      cd backend && npm install
+      cd backend && npm install &&
       cd ../frontend && npm install && npm run build
     startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 3000
+        value: 5000
       - key: MONGO_URI
         fromDatabase:
           name: mongodb-render
@@ -22,7 +18,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CLIENT_URL
-        value: https://your-render-app-name.onrender.com
+        value: https://real-time-chat-video-call-1.onrender.com
       - key: RESEND_API_KEY
         fromSecret:
           name: resend-api-key

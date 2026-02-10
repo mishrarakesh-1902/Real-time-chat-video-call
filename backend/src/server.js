@@ -1,5 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 import express from "express";
 import cookieParser from "cookie-parser";
 
@@ -9,24 +10,12 @@ import { connectDB } from "./lib/db.js";
 import { ENV } from "./lib/env.js";
 import { app, server } from "./lib/socket.js";
 
-// ES modules fix for __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const PORT = ENV.PORT || 3000;
 
 app.use(express.json({ limit: "5mb" }));
 app.use(cookieParser());
 
-/* =====================
-   CORS is already configured in socket.js
-   No need to duplicate it here
-===================== */
-
-/* =====================
-   HEALTH CHECK
-   Useful for Render and monitoring
-===================== */
 app.get("/health", (_req, res) => {
   res.status(200).json({
     status: "ok",
@@ -35,54 +24,50 @@ app.get("/health", (_req, res) => {
   });
 });
 
-/* =====================
-   API ROUTES
-===================== */
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-/* =====================
-   SERVE FRONTEND (PRODUCTION)
-   IMPORTANT: Path must be correct relative to this file
-   The backend is at: /opt/render/project/src/backend/src/server.js
-   Frontend dist is at: /opt/render/project/src/frontend/dist
-===================== */
 if (ENV.NODE_ENV === "production") {
-  // Resolve the correct path to frontend dist
   const frontendDistPath = path.resolve(__dirname, "../../frontend/dist");
   
-  console.log(`📂 Serving frontend from: ${frontendDistPath}`);
-
-  app.use(express.static(frontendDistPath));
-
-  // Handle React routing - serve index.html for all non-API routes
-  app.get("*", (req, res, next) => {
-    // Skip API routes
-    if (req.path.startsWith("/api/") || req.path.startsWith("/socket.io")) {
-      return next();
-    }
-    
-    // Serve index.html for frontend routes
-    const indexPath = path.join(frontendDistPath, "index.html");
-    res.sendFile(indexPath, (err) => {
-      if (err) {
-        console.error("❌ Error serving index.html:", err);
-        res.status(500).json({ message: "Frontend not built. Run 'npm run build' in frontend directory." });
-      }
+  console.log(`📂 Frontend path: ${frontendDistPath}`);
+  console.log(`📂 Path exists: ${fs.existsSync(frontendDistPath)}`);
+  
+  if (!fs.existsSync(frontendDistPath)) {
+    console.error("❌ Frontend build not found!");
+    app.get("*", (_req, res) => {
+      res.status(500).json({
+        message: "Frontend not built. Run 'cd frontend && npm run build' first.",
+      });
     });
-  });
+  } else {
+    app.use(express.static(frontendDistPath));
+    
+    app.get("*", (req, res) => {
+      if (req.path.startsWith("/api/") || req.path.startsWith("/socket.io")) {
+        return res.status(404).json({ message: "API endpoint not found" });
+      }
+      
+      const indexPath = path.join(frontendDistPath, "index.html");
+      res.sendFile(indexPath, (err) => {
+        if (err) {
+          console.error("❌ Error sending index.html:", err);
+          res.status(500).json({ message: "Error serving frontend" });
+        }
+      });
+    });
+    
+    console.log("✅ Frontend static files configured");
+  }
 }
 
-/* =====================
-   START SERVER
-===================== */
 const startServer = async () => {
   try {
     await connectDB();
     console.log("✅ Database connected");
 
-    server.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
+    server.listen(ENV.PORT || 5000, () => {
+      console.log(`🚀 Server running on port ${ENV.PORT || 5000}`);
       console.log(`📝 Environment: ${ENV.NODE_ENV}`);
       console.log(`🔗 Health check: /health`);
     });
