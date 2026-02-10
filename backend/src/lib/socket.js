@@ -50,17 +50,17 @@ const io = new Server(server, {
 
 io.use(socketAuthMiddleware);
 
-const userSocketMap = new Map();
+const onlineUsers = new Map();
 
 export function getReceiverSocketId(userId) {
-  return userSocketMap.get(userId);
+  return onlineUsers.get(userId);
 }
 
 io.on("connection", (socket) => {
   const userId = socket.userId;
   const user = socket.user;
 
-  console.log(`🔌 Socket connected: userId=${userId}, connected=${socket.connected}`);
+  console.log(`🔌 Socket connected: userId=${userId}, socket.id=${socket.id}`);
 
   if (!userId || !user) {
     console.warn("⚠️ Socket connected without authentication - waiting for auth");
@@ -84,8 +84,9 @@ io.on("connection", (socket) => {
           socket.user = authenticatedUser;
           socket.userId = authenticatedUser._id.toString();
           console.log("✅ Socket re-authenticated:", authenticatedUser.fullName);
-          userSocketMap.set(socket.userId, socket.id);
-          io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
+          
+          onlineUsers.set(socket.userId, socket.id);
+          io.emit("getOnlineUsers", Array.from(onlineUsers.keys()));
         } else if (socket.connected) {
           socket.disconnect();
         }
@@ -105,14 +106,22 @@ io.on("connection", (socket) => {
     return;
   }
 
-  console.log("✅ Socket connected:", user.fullName);
+  console.log("✅ Socket authenticated:", user.fullName);
 
-  userSocketMap.set(userId, socket.id);
-  io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
+  onlineUsers.set(userId, socket.id);
+  io.emit("getOnlineUsers", Array.from(onlineUsers.keys()));
+
+  socket.on("addUser", (userIdToAdd) => {
+    if (userIdToAdd && socket.id) {
+      onlineUsers.set(userIdToAdd, socket.id);
+      io.emit("getOnlineUsers", Array.from(onlineUsers.keys()));
+      console.log(`👤 User added to online list: ${userIdToAdd}`);
+    }
+  });
 
   socket.on("video-call:initiate", ({ toUserId }) => {
     if (!toUserId) return;
-    const receiverSocketId = userSocketMap.get(toUserId);
+    const receiverSocketId = onlineUsers.get(toUserId);
     if (!receiverSocketId) return;
     io.to(receiverSocketId).emit("video-call:incoming", {
       fromUserId: userId,
@@ -122,52 +131,58 @@ io.on("connection", (socket) => {
 
   socket.on("video-call:accept", ({ toUserId }) => {
     if (!toUserId) return;
-    const receiverSocketId = userSocketMap.get(toUserId);
+    const receiverSocketId = onlineUsers.get(toUserId);
     if (!receiverSocketId) return;
     io.to(receiverSocketId).emit("video-call:accepted", { byUserId: userId });
   });
 
   socket.on("video-call:reject", ({ toUserId }) => {
     if (!toUserId) return;
-    const receiverSocketId = userSocketMap.get(toUserId);
+    const receiverSocketId = onlineUsers.get(toUserId);
     if (!receiverSocketId) return;
     io.to(receiverSocketId).emit("video-call:rejected", { byUserId: userId });
   });
 
   socket.on("webrtc:offer", ({ toUserId, offer }) => {
     if (!toUserId || !offer) return;
-    const receiverSocketId = userSocketMap.get(toUserId);
+    const receiverSocketId = onlineUsers.get(toUserId);
     if (!receiverSocketId) return;
     io.to(receiverSocketId).emit("webrtc:offer", { fromUserId: userId, offer });
   });
 
   socket.on("webrtc:answer", ({ toUserId, answer }) => {
     if (!toUserId || !answer) return;
-    const receiverSocketId = userSocketMap.get(toUserId);
+    const receiverSocketId = onlineUsers.get(toUserId);
     if (!receiverSocketId) return;
     io.to(receiverSocketId).emit("webrtc:answer", { fromUserId: userId, answer });
   });
 
   socket.on("webrtc:ice-candidate", ({ toUserId, candidate }) => {
     if (!toUserId || !candidate) return;
-    const receiverSocketId = userSocketMap.get(toUserId);
+    const receiverSocketId = onlineUsers.get(toUserId);
     if (!receiverSocketId) return;
     io.to(receiverSocketId).emit("webrtc:ice-candidate", { fromUserId: userId, candidate });
   });
 
   socket.on("video-call:end", ({ toUserId }) => {
     if (!toUserId) return;
-    const receiverSocketId = userSocketMap.get(toUserId);
+    const receiverSocketId = onlineUsers.get(toUserId);
     if (!receiverSocketId) return;
     io.to(receiverSocketId).emit("video-call:ended", { byUserId: userId });
   });
 
   socket.on("disconnect", (reason) => {
     console.log(`❌ Socket disconnected: ${user?.fullName || 'unknown'}, reason: ${reason}`);
-    if (userId && userSocketMap.get(userId) === socket.id) {
-      userSocketMap.delete(userId);
-      io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
+    
+    for (let [uid, socketId] of onlineUsers.entries()) {
+      if (socketId === socket.id) {
+        onlineUsers.delete(uid);
+        console.log(`👤 User removed from online list: ${uid}`);
+        break;
+      }
     }
+    
+    io.emit("getOnlineUsers", Array.from(onlineUsers.keys()));
   });
 });
 

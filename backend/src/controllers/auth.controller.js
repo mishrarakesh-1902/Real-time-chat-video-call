@@ -1,4 +1,3 @@
-
 import bcrypt from "bcryptjs";
 import cloudinary from "../lib/cloudinary.js";
 import User from "../models/User.js";
@@ -14,23 +13,23 @@ export const signup = async (req, res) => {
     if (!fullName || !email || !password) {
       return res
         .status(400)
-        .json({ message: "All fields are required" });
+        .json({ success: false, message: "All fields are required" });
     }
 
     if (password.length < 6) {
       return res.status(400).json({
+        success: false,
         message: "Password must be at least 6 characters",
       });
     }
 
-    // validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const normalizedEmail = email.toLowerCase();
 
     if (!emailRegex.test(normalizedEmail)) {
       return res
         .status(400)
-        .json({ message: "Invalid email format" });
+        .json({ success: false, message: "Invalid email format" });
     }
 
     const existingUser = await User.findOne({
@@ -40,7 +39,7 @@ export const signup = async (req, res) => {
     if (existingUser) {
       return res
         .status(400)
-        .json({ message: "Email already exists" });
+        .json({ success: false, message: "Email already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -51,18 +50,17 @@ export const signup = async (req, res) => {
       password: hashedPassword,
     });
 
-    // ✅ issue JWT cookie
     const token = generateToken(newUser._id, res);
 
     res.status(201).json({
+      success: true,
       _id: newUser._id,
       fullName: newUser.fullName,
       email: newUser.email,
       profilePic: newUser.profilePic,
-      token, // Return token for localStorage fallback
+      token,
     });
 
-    // send welcome email (non-blocking)
     sendWelcomeEmail(
       newUser.email,
       newUser.fullName,
@@ -73,11 +71,11 @@ export const signup = async (req, res) => {
   } catch (error) {
     console.error("Error in signup controller:", error);
     res.status(500).json({
+      success: false,
       message: "Internal server error",
     });
   }
 };
-
 
 /* ===================== LOGIN ===================== */
 export const login = async (req, res) => {
@@ -86,15 +84,14 @@ export const login = async (req, res) => {
   if (!email || !password) {
     return res
       .status(400)
-      .json({ message: "Email and password are required" });
+      .json({ success: false, message: "Email and password are required" });
   }
 
   try {
-    // 🔑 THIS IS THE FIX (MUST BE EXACT)
     const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
 
     const isPasswordCorrect = await bcrypt.compare(
@@ -103,22 +100,22 @@ export const login = async (req, res) => {
     );
 
     if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
 
-    // issue JWT cookie
     const token = generateToken(user._id, res);
 
     res.status(200).json({
+      success: true,
       _id: user._id,
       fullName: user.fullName,
       email: user.email,
       profilePic: user.profilePic,
-      token, // Return token for localStorage fallback
+      token,
     });
   } catch (error) {
     console.error("Error in login controller:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 
@@ -133,6 +130,7 @@ export const logout = (_, res) => {
   });
 
   res.status(200).json({
+    success: true,
     message: "Logged out successfully",
   });
 };
@@ -145,12 +143,14 @@ export const updateProfile = async (req, res) => {
 
     if (!profilePic) {
       return res.status(400).json({
+        success: false,
         message: "Profile picture is required",
       });
     }
 
     if (!userId) {
       return res.status(401).json({
+        success: false,
         message: "Unauthorized",
       });
     }
@@ -163,6 +163,7 @@ export const updateProfile = async (req, res) => {
     } catch (err) {
       console.error("Cloudinary error:", err);
       return res.status(500).json({
+        success: false,
         message: "Image upload failed",
       });
     }
@@ -173,13 +174,17 @@ export const updateProfile = async (req, res) => {
       { new: true }
     ).select("-password");
 
-    res.status(200).json(updatedUser);
+    res.status(200).json({
+      success: true,
+      ...updatedUser,
+    });
   } catch (error) {
     console.error(
       "Error in updateProfile controller:",
       error
     );
     res.status(500).json({
+      success: false,
       message: "Internal server error",
     });
   }

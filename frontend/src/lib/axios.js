@@ -23,16 +23,24 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   (error) => {
     if (error.response) {
-      console.error("API Error:", error.response.status, error.response.data);
+      const { status, data } = error.response;
+      console.error(`API Error ${status}:`, data);
+      
+      const message = data?.message || data?.error || `Request failed with status ${status}`;
+      
+      return Promise.reject(new Error(message));
     } else if (error.request) {
       if (error.code === "ECONNABORTED") {
-        console.error("API Timeout");
-      } else {
-        console.error("Network Error:", error.message);
+        console.error("API Timeout: Request timed out");
+        return Promise.reject(new Error("Request timed out. Please try again."));
       }
+      console.error("Network Error:", error.message);
+      return Promise.reject(new Error("Network error. Please check your connection."));
     }
     return Promise.reject(error);
   }

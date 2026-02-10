@@ -2,17 +2,26 @@ import { io } from "socket.io-client";
 
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "https://real-time-chat-video-call-3n4r.onrender.com";
 
-export const socket = io(SOCKET_URL, {
-  autoConnect: false,
-  withCredentials: true,
-  reconnection: true,
-  reconnectionAttempts: 10,
-  reconnectionDelay: 2000,
-  reconnectionDelayMax: 30000,
-  timeout: 60000,
-  transports: ["websocket", "polling"],
-  auth: { token: null },
-});
+let socketInstance = null;
+
+export const getSocket = () => {
+  if (!socketInstance) {
+    socketInstance = io(SOCKET_URL, {
+      autoConnect: false,
+      withCredentials: true,
+      reconnection: true,
+      reconnectionAttempts: 10,
+      reconnectionDelay: 2000,
+      reconnectionDelayMax: 30000,
+      timeout: 60000,
+      transports: ["websocket", "polling"],
+      auth: { token: null },
+    });
+  }
+  return socketInstance;
+};
+
+export const socket = getSocket();
 
 let connectionErrorListeners = [];
 
@@ -26,6 +35,7 @@ const notifyConnectionError = (error) => {
 
 socket.on("connect", () => {
   console.log("✅ Socket connected:", socket.id);
+  
   const token = localStorage.getItem("authToken") || socket.auth.token;
   if (token && !socket.userId) {
     socket.emit("authenticate", token);
@@ -72,6 +82,11 @@ socket.on("reconnect_failed", () => {
   notifyConnectionError(new Error("Reconnection failed"));
 });
 
+socket.on("getOnlineUsers", (users) => {
+  console.log("📡 Received online users:", users);
+  window.dispatchEvent(new CustomEvent("onlineUsersUpdate", { detail: users }));
+});
+
 export const connectSocket = (token) => {
   socket.auth.token = token;
   localStorage.setItem("authToken", token);
@@ -92,3 +107,9 @@ export const disconnectSocket = () => {
 };
 
 export const isSocketConnected = () => socket.connected;
+
+export const emitAddUser = (userId) => {
+  if (socket.connected && userId) {
+    socket.emit("addUser", userId);
+  }
+};
