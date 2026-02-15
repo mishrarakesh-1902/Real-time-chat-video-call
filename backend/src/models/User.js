@@ -35,6 +35,10 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    isOnline: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

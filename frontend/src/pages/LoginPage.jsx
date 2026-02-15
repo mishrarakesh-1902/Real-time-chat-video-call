@@ -16,8 +16,8 @@ function LoginPage() {
   return (
     <div className="min-h-screen bg-surface-50 flex">
       {/* Left Side - Form */}
-      <div className="flex-1 flex items-center justify-center p-6 md:p-12">
-        <div className="w-full max-w-md">
+      <div className="flex-1 flex items-center justify-center p-4 md:p-12">
+        <div className="w-full max-w-md px-4 sm:px-0">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 mb-8">
             <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">

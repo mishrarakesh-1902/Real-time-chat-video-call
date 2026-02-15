@@ -48,6 +48,7 @@ export const signup = async (req, res) => {
       fullName,
       email: normalizedEmail,
       password: hashedPassword,
+      isOnline: true,
     });
 
     const token = generateToken(newUser._id, res);
@@ -58,6 +59,7 @@ export const signup = async (req, res) => {
       fullName: newUser.fullName,
       email: newUser.email,
       profilePic: newUser.profilePic,
+      isOnline: true,
       token,
     });
 
@@ -105,12 +107,16 @@ export const login = async (req, res) => {
 
     const token = generateToken(user._id, res);
 
+    // Update user online status to true
+    await User.findByIdAndUpdate(user._id, { isOnline: true });
+
     res.status(200).json({
       success: true,
       _id: user._id,
       fullName: user.fullName,
       email: user.email,
       profilePic: user.profilePic,
+      isOnline: true,
       token,
     });
   } catch (error) {
@@ -120,7 +126,22 @@ export const login = async (req, res) => {
 };
 
 /* ===================== LOGOUT ===================== */
-export const logout = (_, res) => {
+export const logout = async (req, res) => {
+  try {
+    // Get user from cookie
+    const token = req.cookies?.jwt;
+    if (token) {
+      const jwt = await import("jsonwebtoken");
+      const { ENV } = await import("../lib/env.js");
+      const decoded = jwt.default.verify(token, ENV.JWT_SECRET);
+      if (decoded?.userId) {
+        await User.findByIdAndUpdate(decoded.userId, { isOnline: false });
+      }
+    }
+  } catch (error) {
+    console.error("Error updating logout status:", error);
+  }
+
   res.cookie("jwt", "", {
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",

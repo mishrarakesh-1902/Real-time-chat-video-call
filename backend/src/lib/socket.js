@@ -14,6 +14,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   "https://real-time-chat-video-call-1.onrender.com",
+  "https://real-time-chat-video-call-3n4r.onrender.com",
 ];
 
 if (ENV.CLIENT_URL && !allowedOrigins.includes(ENV.CLIENT_URL)) {
@@ -56,7 +57,7 @@ export function getReceiverSocketId(userId) {
   return onlineUsers.get(userId);
 }
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   const userId = socket.userId;
   const user = socket.user;
 
@@ -85,6 +86,9 @@ io.on("connection", (socket) => {
           socket.userId = authenticatedUser._id.toString();
           console.log("✅ Socket re-authenticated:", authenticatedUser.fullName);
           
+          // Update user online status in database
+          await User.default.findByIdAndUpdate(socket.userId, { isOnline: true });
+          
           onlineUsers.set(socket.userId, socket.id);
           io.emit("getOnlineUsers", Array.from(onlineUsers.keys()));
         } else if (socket.connected) {
@@ -107,6 +111,10 @@ io.on("connection", (socket) => {
   }
 
   console.log("✅ Socket authenticated:", user.fullName);
+
+  // Update user online status in database
+  const User = await import("../models/User.js");
+  await User.default.findByIdAndUpdate(userId, { isOnline: true });
 
   onlineUsers.set(userId, socket.id);
   io.emit("getOnlineUsers", Array.from(onlineUsers.keys()));
@@ -171,8 +179,14 @@ io.on("connection", (socket) => {
     io.to(receiverSocketId).emit("video-call:ended", { byUserId: userId });
   });
 
-  socket.on("disconnect", (reason) => {
+  socket.on("disconnect", async (reason) => {
     console.log(`❌ Socket disconnected: ${user?.fullName || 'unknown'}, reason: ${reason}`);
+    
+    // Update user online status in database
+    if (userId) {
+      const User = await import("../models/User.js");
+      await User.default.findByIdAndUpdate(userId, { isOnline: false });
+    }
     
     for (let [uid, socketId] of onlineUsers.entries()) {
       if (socketId === socket.id) {

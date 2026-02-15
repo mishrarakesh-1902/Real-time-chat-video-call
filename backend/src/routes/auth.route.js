@@ -56,7 +56,7 @@ router.get("/check", async (req, res) => {
 
     const user = await User.findById(
       decoded.userId
-    ).select("_id fullName email profilePic");
+    ).select("_id fullName email profilePic isOnline");
 
     return res.status(200).json(user || null);
   } catch (error) {

@@ -1,5 +1,6 @@
 import { useChatStore } from '../store/useChatStore';
 import { useAuthStore } from '../store/useAuthStore';
+import { useState, useEffect } from 'react';
 
 import ProfileHeader from '../components/ProfileHeader';
 import ActiveTabSwitch from '../components/ActiveTabSwitch';
@@ -9,16 +10,31 @@ import ChatContainer from '../components/ChatContainer';
 import NoConversationPlaceholder from '../components/NoConversationPlaceholder';
 import IncomingCallModal from '../components/IncomingCallModal';
 import VideoCallModal from '../components/VideoCallModal';
+import { ArrowLeft } from 'lucide-react';
 
 function ChatPage() {
   const { activeTab, selectedUser } = useChatStore();
   const { activeCall, incomingCall } = useAuthStore();
+  const [showSidebar, setShowSidebar] = useState(true);
+
+  // On mobile, hide sidebar when a user is selected
+  useEffect(() => {
+    if (selectedUser) {
+      // Check if mobile screen
+      if (window.innerWidth < 768) {
+        setShowSidebar(false);
+      }
+    } else {
+      setShowSidebar(true);
+    }
+  }, [selectedUser]);
 
   return (
-    <div className="min-h-screen bg-surface-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-7xl h-[90vh] bg-white rounded-3xl shadow-elevated overflow-hidden flex">
-        {/* LEFT SIDEBAR */}
-        <div className="w-80 border-r border-surface-200 flex flex-col bg-surface-50">
+    <div className="min-h-screen bg-surface-100 flex items-center justify-center p-0 md:p-4">
+      <div className="w-full h-screen md:h-[90vh] md:max-w-7xl bg-white md:rounded-3xl shadow-elevated overflow-hidden flex">
+        {/* LEFT SIDEBAR - Hidden on mobile when chat is open */}
+        <div className={`w-full md:w-80 border-r border-surface-200 flex flex-col bg-surface-50 
+          ${selectedUser && !showSidebar ? 'hidden md:flex' : 'flex'}`}>
           {/* Profile Header */}
           <ProfileHeader />
 
@@ -44,8 +60,22 @@ function ChatPage() {
           </div>
         </div>
 
-        {/* RIGHT CHAT AREA */}
-        <div className="flex-1 flex flex-col bg-white">
+        {/* RIGHT CHAT AREA - Hidden on mobile when no user selected */}
+        <div className={`flex-1 flex flex-col bg-white 
+          ${!selectedUser || showSidebar ? 'hidden md:flex' : 'flex'} 
+          w-full`}>
+          {/* Mobile Header with Back Button */}
+          {selectedUser && (
+            <div className="md:hidden flex items-center gap-3 p-3 border-b border-surface-200 bg-white">
+              <button 
+                onClick={() => setShowSidebar(true)}
+                className="p-2 hover:bg-surface-100 rounded-lg"
+              >
+                <ArrowLeft className="w-5 h-5 text-surface-600" />
+              </button>
+              <span className="font-semibold text-surface-900">Back to chats</span>
+            </div>
+          )}
           {selectedUser ? (
             <ChatContainer />
           ) : (

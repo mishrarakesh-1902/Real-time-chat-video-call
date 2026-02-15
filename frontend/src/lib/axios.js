@@ -31,16 +31,17 @@ axiosInstance.interceptors.response.use(
       const { status, data } = error.response;
       console.error(`API Error ${status}:`, data);
       
-      const message = data?.message || data?.error || `Request failed with status ${status}`;
-      
-      return Promise.reject(new Error(message));
+      // Keep the original error structure so caller can access response data
+      return Promise.reject(error);
     } else if (error.request) {
       if (error.code === "ECONNABORTED") {
         console.error("API Timeout: Request timed out");
-        return Promise.reject(new Error("Request timed out. Please try again."));
+        error.message = "Request timed out. Please try again.";
+      } else {
+        console.error("Network Error:", error.message);
+        error.message = "Network error. Please check your connection.";
       }
-      console.error("Network Error:", error.message);
-      return Promise.reject(new Error("Network error. Please check your connection."));
+      return Promise.reject(error);
     }
     return Promise.reject(error);
   }

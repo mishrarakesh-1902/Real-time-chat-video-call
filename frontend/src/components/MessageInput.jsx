@@ -197,7 +197,7 @@ function MessageInput() {
             {showEmojiPicker && (
               <div
                 ref={emojiPickerRef}
-                className="absolute bottom-full left-0 mb-2 w-72 bg-white rounded-xl shadow-lg border border-surface-200 overflow-hidden z-50"
+                className="absolute bottom-full left-0 mb-2 w-64 md:w-72 bg-white rounded-xl shadow-lg border border-surface-200 overflow-hidden z-50"
               >
                 <div className="p-2 border-b border-surface-100">
                   <div className="flex gap-1">
