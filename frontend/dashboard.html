@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChatFlow - Main Dashboard</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration -->
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"inverse-on-surface": "#2f3034", "glass-border": "rgba(255, 255, 255, 0.12)", "primary-container": "#508efc", surface: "#111316", "secondary-fixed-dim": "#c9bfff", error: "#ffb4ab", "on-primary-container": "#00285d", "surface-bright": "#37393c", "inverse-primary": "#005ac3", "surface-container-high": "#282a2d", secondary: "#c9bfff", "on-primary-fixed": "#001a42", primary: "#aec6ff", "gradient-end": "#7B61FF", "tertiary-container": "#00a484", "on-error-container": "#ffdad6", "surface-dim": "#111316", "primary-fixed-dim": "#aec6ff", "on-background": "#e2e2e6", "glass-surface": "rgba(255, 255, 255, 0.08)", "on-secondary-container": "#b7aaff", "primary-fixed": "#d8e2ff", "on-surface-variant": "#c2c6d5", "surface-tint": "#aec6ff", "surface-container-lowest": "#0c0e11", "on-tertiary-fixed": "#002018", "inverse-surface": "#e2e2e6", "on-primary": "#002e6a", background: "#111316", "outline-variant": "#424753", "on-secondary-fixed-variant": "#451dc6", "gradient-start": "#3578E5", "on-surface": "#e2e2e6", "surface-variant": "#333538", "surface-container-highest": "#333538", tertiary: "#3edeb7", "tertiary-fixed-dim": "#3edeb7", "on-secondary-fixed": "#1a0063", "surface-container": "#1e2023", "error-container": "#93000a", "status-online": "#25C2A0", "secondary-container": "#451dc6", "secondary-fixed": "#e5deff", "tertiary-fixed": "#63fbd2", "status-busy": "#FFB800", "surface-container-low": "#1a1c1f", "danger-red": "#FF4D4F", "on-primary-fixed-variant": "#004395", outline: "#8c909f", "on-tertiary-fixed-variant": "#005140", "on-secondary": "#2e009c", "on-tertiary-container": "#003025", "on-tertiary": "#00382b", "on-error": "#690005"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-max": "1440px", "stack-xl": "32px", "stack-3xl": "64px", "margin-desktop": "40px", gutter: "24px", unit: "8px", "margin-mobile": "16px"}, fontFamily: {"title-md": ["Inter", "sans-serif"], "display-lg": ["Inter", "sans-serif"], "headline-lg-mobile": ["Inter", "sans-serif"], "body-lg": ["Inter", "sans-serif"], "headline-lg": ["Inter", "sans-serif"], "body-sm": ["Inter", "sans-serif"], "label-caps": ["Inter", "sans-serif"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"title-md": ["20px", {lineHeight: "28px", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-lg-mobile": ["24px", {lineHeight: "32px", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-sm": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700"}]}}}};</script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .glass-inner-glow {
+                box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background h-screen w-full overflow-hidden flex font-sans selection:bg-primary-container selection:text-on-primary-container">
+<!-- Ambient Background Glows -->
+<div class="fixed top-0 left-1/4 w-[500px] h-[500px] bg-gradient-start/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+<div class="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-gradient-end/5 rounded-full blur-[150px] pointer-events-none z-0"></div>
+<!-- LEFT PANE: Sidebar Navigation & List -->
+<aside class="w-80 md:w-96 flex flex-col bg-surface-container-low/80 backdrop-blur-3xl border-r border-glass-border z-10 shrink-0 relative">
+<!-- Profile Header -->
+<div class="p-gutter border-b border-glass-border flex justify-between items-center bg-glass-surface glass-inner-glow">
+<div class="flex items-center gap-3">
+<div class="relative group cursor-pointer">
+<img class="w-12 h-12 rounded-full object-cover ring-2 ring-glass-border group-hover:ring-primary transition-all duration-300" data-alt="A professional portrait photo of a young modern male professional with dark hair, wearing a sleek dark grey turtleneck. The lighting is moody and cinematic with a soft blue neon rim light, fitting a high-tech premium aesthetic. Shot on a mirrorless camera with shallow depth of field, dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR5B5d5e-PA5TVSjKMTcaoH0JnOJVx2xBwz5S_HWmLPVwJvOSSk764BIlrVfaNjBZBFhBZ0nPRczTgEIs7eZ5FAzDWqsuV0n0sNKvrUuIotSFClETqb-zxVsBrklRy7symbQzfFY-H3jCUjPrsLMIaCpEEINiBYlhvJjfziyFFv5r8_Ipb74BRa3Ab-xNsUxJ8_CfYE9iays6johHJJ6GUtvoY5mT3zdFWeJyFPMQ3lbTHaUxT1EFyxfBZOXCJkZraW78rtnhJX8s"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-status-online border-2 border-surface-container-low rounded-full shadow-[0_0_8px_rgba(37,194,160,0.6)] animate-pulse"></div>
+</div>
+<div>
+<h2 class="font-title-md text-title-md text-on-surface">Alex Rivers</h2>
+<p class="font-body-sm text-body-sm text-status-online flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-online inline-block"></span>
+                        Online
+                    </p>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-2 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-glass-surface transition-colors" title="Mute Notifications">
+<span class="material-symbols-outlined">notifications_off</span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-glass-surface transition-colors" title="Settings">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+<!-- Tab Switcher & Search -->
+<div class="p-gutter pb-2 space-y-4">
+<div class="flex p-1 bg-surface-container-high rounded-xl border border-glass-border glass-inner-glow">
+<button class="flex-1 py-1.5 font-body-sm text-body-sm rounded-lg bg-secondary-container text-on-secondary-container font-medium shadow-sm transition-all">Chats</button>
+<button class="flex-1 py-1.5 font-body-sm text-body-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-glass-surface font-medium transition-all">Contacts</button>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface border border-glass-border text-on-surface rounded-xl pl-10 pr-4 py-2.5 font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-on-surface-variant shadow-inner" placeholder="Search conversations..." type="text"/>
+</div>
+</div>
+<!-- Chat List Area -->
+<div class="flex-1 overflow-y-auto px-3 pb-gutter space-y-1 scrollbar-hide pt-2">
+<!-- Active Chat Item -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-glass-surface border border-primary/30 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)] glass-inner-glow relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex items-center gap-3 relative z-10">
+<div class="relative shrink-0">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="A professional portrait of an energetic young woman with short curly hair, smiling subtly. She is wearing a modern navy blazer over a white tech-fabric shirt. The scene has a clean, high-key studio lighting setup with a hint of purple gradient light reflecting off her shoulders, conveying a modern and approachable corporate vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiy-ItICxhCCT9KlY9R5k3ztW_E_5MewvaSNYZap69ldvhTxw-OrXj3Dvqgqm411E0LkvNaj71HT_Ha5HgB-YnDbV_16NuvLcltFwUEaxFkYyA5ukmj4iTqfTqvhCQkN_i0EQ96SoNvYpkyo65NuKWtqdHISEGqWvV9Zt_Kxt9XwLjmnk933ZNuigUhYGShLuUTTr6x4dyQR7daWyL_EcVB4lQ1-9miZyzZE0s-VS-eoNGEXq8MhmDg7z54D58KDWy-UmUyUVF_TA"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-status-online border-2 border-surface-container-low rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-primary truncate w-32">Jordan Smith</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate w-40">Yes, I just reviewed it. The new...</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1 relative z-10 shrink-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">10:42 AM</span>
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-on-primary font-label-caps text-[10px]">2</div>
+</div>
+</div>
+<!-- Inactive Item 1 -->
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-glass-surface border border-transparent hover:border-glass-border cursor-pointer transition-all group">
+<div class="flex items-center gap-3">
+<div class="relative shrink-0">
+<img class="w-12 h-12 rounded-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A close-up portrait of a thoughtful man in his 30s with short hair and thin wire-rimmed glasses. He is looking slightly off-camera. The lighting is soft and natural, but the background is a blurred dark office setting with subtle glowing computer screens, giving a tech-savvy atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJhSIVVjwD04X55XwNRdmvLJscM2Eh7QuEdwGnt99Ept1QG3SHFJDUfSXvC50qWWlb5KwqQ152CWW1_3BS2cE6vYjCnbav6hIXiIAbizAYOQEiXVPKhI5qrk6TsYU_eEH-d7D0ZNhvJaKg_aLb46yrQTWiv-hCLxKHqByyWs66e6Y1LJJc-l_tZfSKXHvOsOcZwpis6l1OupPi-k5Jmv782mM_e69ci_L88fU0mwZswyo3XDpedt0Fgn42Sl_sw1SQev-tHMwhWyE"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-status-busy border-2 border-surface-container-low rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-[16px] text-on-surface truncate w-32">Design Team</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate w-40">Sarah: Let's jump on a call.</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1 shrink-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">09:15 AM</span>
+</div>
+</div>
+<!-- Inactive Item 2 -->
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-glass-surface border border-transparent hover:border-glass-border cursor-pointer transition-all group">
+<div class="flex items-center gap-3">
+<div class="relative shrink-0">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-tertiary-container to-surface-container-high flex items-center justify-center text-on-tertiary-container font-title-md opacity-80 group-hover:opacity-100 transition-opacity">MK</div>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-[16px] text-on-surface truncate w-32">Maria Kurnikova</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate w-40">Sent an attachment</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1 shrink-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Yesterday</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- RIGHT PANE: Active Chat Area -->
+<main class="flex-1 flex flex-col relative bg-transparent z-20 h-full">
+<!-- Active Chat Header -->
+<header class="h-20 px-margin-desktop flex justify-between items-center bg-glass-surface backdrop-blur-2xl border-b border-glass-border z-30 shrink-0 shadow-sm glass-inner-glow">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover ring-1 ring-glass-border" data-alt="A professional portrait of an energetic young woman with short curly hair, smiling subtly. She is wearing a modern navy blazer over a white tech-fabric shirt. The scene has a clean, high-key studio lighting setup with a hint of purple gradient light reflecting off her shoulders, conveying a modern and approachable corporate vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClY6NTq_qCClEQWehfSchFb2NlBkqBTyfHsGVRZflWc0DXhoD_-uMhOFissXa2Bn6fQ4WY6YFzG76ppBHpL-302AcznZabkv_1f_2WwlLOCDo6FXOgxhius4XUikwTgsk8Mmgje21UUsKioOLZKsldhogTZpsOADAEuF_fObA9IfbKPSJHBiE_Jl6SFumN-qOFzuHzQ1MohDJnb7eKHRCC8Zx3HWUBlyFUOCKUKsLrE5yIjTkKDf9d4DKfSi4VrEWceWQ3s90gmrw"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-status-online border-2 border-surface rounded-full shadow-[0_0_8px_rgba(37,194,160,0.5)]"></div>
+</div>
+<div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface tracking-tight">Jordan Smith</h1>
+<p class="font-body-sm text-body-sm text-status-online font-medium flex items-center gap-1.5">
+                        Typing<span class="flex gap-0.5"><span class="w-1 h-1 bg-status-online rounded-full animate-bounce" style="animation-delay: 0s;"></span><span class="w-1 h-1 bg-status-online rounded-full animate-bounce" style="animation-delay: 0.1s;"></span><span class="w-1 h-1 bg-status-online rounded-full animate-bounce" style="animation-delay: 0.2s;"></span></span>
+</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-full bg-glass-surface border border-glass-border flex items-center justify-center text-on-surface hover:bg-surface-variant hover:scale-105 transition-all shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">videocam</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-glass-surface border border-glass-border flex items-center justify-center text-on-surface hover:bg-surface-variant hover:scale-105 transition-all shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call</span>
+</button>
+<div class="w-px h-6 bg-glass-border mx-1"></div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-glass-surface transition-all">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-glass-surface transition-all">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Message Scroll Area -->
+<div class="flex-1 overflow-y-auto p-gutter md:px-margin-desktop flex flex-col gap-6 scroll-smooth z-10 relative">
+<!-- Date Badge -->
+<div class="flex justify-center my-4">
+<span class="px-4 py-1.5 rounded-full bg-glass-surface border border-glass-border font-label-caps text-label-caps text-on-surface-variant backdrop-blur-md shadow-sm">Today, October 24th</span>
+</div>
+<!-- Other Message (Text) -->
+<div class="flex items-end gap-3 max-w-[75%] group">
+<img class="w-8 h-8 rounded-full object-cover mb-1 shrink-0 shadow-sm" data-alt="A professional portrait of an energetic young woman with short curly hair, smiling subtly. She is wearing a modern navy blazer over a white tech-fabric shirt. The scene has a clean, high-key studio lighting setup with a hint of purple gradient light reflecting off her shoulders, conveying a modern and approachable corporate vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ5zKuoK5sw-ljVX4vMOhiPpn2HL-I0cizvykXAgPMI6XCnoDH0pn3555YUg9bLRgdVZrPA9Do4SO9lR2lc6EejCbaw8dQAea_vNeGIXnoC3ERXwFsHoyQlsLHz0sUwm31TToqbE6uPOu4JmFkKr0E9ICwfeHNgOrX0dygYHtxsmrd7Q2SKADa2yAmEWVxZrzAJy5vSd6GPYwG_Lb8WirF3Udqc0StKhTIlqBegYJq47ppIMkvBQaufzwtr5UUkkTCOLu75vaDaAI"/>
+<div class="flex flex-col gap-1">
+<span class="font-body-sm text-[12px] text-on-surface-variant ml-1 opacity-0 group-hover:opacity-100 transition-opacity">10:30 AM</span>
+<div class="bg-glass-surface border border-glass-border text-on-surface font-body-lg text-body-lg p-4 rounded-[20px] rounded-bl-sm shadow-md backdrop-blur-md glass-inner-glow leading-relaxed">
+                        Hey! Have you seen the latest design mockups for the dashboard? I just uploaded them to the shared folder.
+                    </div>
+</div>
+</div>
+<!-- Other Message (Document Bento Card) -->
+<div class="flex items-end gap-3 max-w-[75%] group">
+<div class="w-8 shrink-0"></div> <!-- Spacer for alignment -->
+<div class="bg-surface-container-low border border-glass-border p-4 rounded-[20px] rounded-bl-sm flex flex-col gap-3 backdrop-blur-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer w-72">
+<div class="flex items-start justify-between">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-error-container to-surface-container-high flex items-center justify-center text-error border border-glass-border">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+</div>
+<button class="p-1.5 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-glass-surface transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+<div>
+<p class="font-title-md text-[16px] text-on-surface font-semibold truncate">Strategy_Doc_v2.pdf</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">2.4 MB • 12 Pages</p>
+</div>
+</div>
+</div>
+<!-- Self Message (Image Preview) -->
+<div class="flex items-end gap-3 max-w-[75%] self-end flex-row-reverse group">
+<div class="w-8 shrink-0"></div>
+<div class="flex flex-col gap-1 items-end">
+<span class="font-body-sm text-[12px] text-on-surface-variant mr-1 opacity-0 group-hover:opacity-100 transition-opacity">10:35 AM</span>
+<div class="p-1.5 bg-gradient-to-br from-gradient-start to-gradient-end rounded-[20px] rounded-br-sm shadow-[0_8px_30px_rgba(53,120,229,0.25)] relative group/img overflow-hidden">
+<div class="absolute inset-0 bg-white/10 opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none z-10"></div>
+<img class="rounded-[14px] max-w-sm object-cover border border-white/10" data-alt="A sleek, futuristic dashboard UI concept displayed on an angled glossy tablet screen. The UI features dark mode aesthetics, glowing blue and purple charts, and holographic data visualizations. The tablet is resting on a dark, reflective glass desk with dramatic top-down spotlighting emphasizing the premium tech design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPKHrricQOdMH5woU2JegW5HdHOZMsmZAwnR55YcBJT-55It4vJuqj7kQDDfT4zecAPvEFILesaBNLQildJRyUtjjKWyhRlIsqeKi5ObLfdPIpJ2KuGRQc1KulxFkxgKyVg9HTNpp0dDP1HtWtvYV1mhSzmfFULVrmrbdNL8uvihUac5xPY20CC6MESAvQRKUJ3G9GUTKvekqPeq8QiQTiS0bciym9yS1cupMczdxPoPs_Y5jxHMqrdwuH9TNTSB-Pmezb3E6ViEU"/>
+<div class="absolute bottom-3 right-3 bg-surface/80 backdrop-blur-md px-2 py-1 rounded-lg text-white font-label-caps text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">visibility</span> 4K
+                        </div>
+</div>
+</div>
+</div>
+<!-- Self Message (Text) -->
+<div class="flex items-end gap-3 max-w-[75%] self-end flex-row-reverse group">
+<div class="w-8 shrink-0"></div>
+<div class="flex flex-col gap-1 items-end">
+<span class="font-body-sm text-[12px] text-on-surface-variant mr-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        10:42 AM <span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">done_all</span>
+</span>
+<div class="bg-gradient-to-r from-gradient-start to-gradient-end text-white font-body-lg text-body-lg p-4 rounded-[20px] rounded-br-sm shadow-[0_4px_20px_rgba(53,120,229,0.3)] glass-inner-glow leading-relaxed">
+                        Yes, I just reviewed it. The new layout looks incredible! The glassmorphism effects are super clean. I'll start implementing the front-end components today.
+                    </div>
+</div>
+</div>
+<!-- Spacer to ensure scroll doesn't hide behind input -->
+<div class="h-4"></div>
+</div>
+<!-- Message Input Area -->
+<div class="p-gutter md:px-margin-desktop bg-surface/60 backdrop-blur-2xl border-t border-glass-border shrink-0 z-30 relative shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
+<div class="flex items-end gap-3 max-w-5xl mx-auto">
+<!-- Attachment Actions -->
+<div class="flex gap-1 mb-1 shrink-0 bg-glass-surface rounded-full p-1 border border-glass-border">
+<button class="w-10 h-10 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors flex items-center justify-center group" title="Attach File">
+<span class="material-symbols-outlined group-hover:rotate-12 transition-transform">attach_file</span>
+</button>
+<button class="w-10 h-10 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors flex items-center justify-center group" title="Send Image">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">image</span>
+</button>
+</div>
+<!-- Input Field -->
+<div class="flex-1 relative bg-surface-container-high/80 backdrop-blur-md border border-glass-border rounded-[24px] focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all shadow-inner group">
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-on-surface font-body-lg text-body-lg px-5 py-3.5 max-h-32 resize-none placeholder:text-on-surface-variant/70 scrollbar-hide block" placeholder="Type a secure message..." rows="1"></textarea>
+<!-- Decorative corner glow on focus -->
+<div class="absolute inset-0 rounded-[24px] pointer-events-none shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] opacity-100 transition-opacity"></div>
+<!-- Inner action inside input -->
+<div class="absolute right-3 bottom-2 flex items-center">
+<button class="w-8 h-8 rounded-full text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">mood</span>
+</button>
+</div>
+</div>
+<!-- Send Button -->
+<button class="w-14 h-14 mb-0.5 bg-gradient-to-br from-gradient-start to-gradient-end text-white rounded-full shadow-[0_4px_16px_rgba(53,120,229,0.4)] hover:shadow-[0_8px_24px_rgba(53,120,229,0.6)] transition-all shrink-0 flex items-center justify-center hover:scale-[1.02] active:scale-95 group relative overflow-hidden">
+<div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform relative z-10" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Auto-resize textarea script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tx = document.getElementsByTagName("textarea");
+            for (let i = 0; i < tx.length; i++) {
+              tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+              tx[i].addEventListener("input", OnInput, false);
+            }
+
+            function OnInput() {
+              this.style.height = 'auto';
+              this.style.height = (this.scrollHeight) + "px";
+              if(this.scrollHeight > 128) { // max-h-32 approx
+                  this.style.overflowY = 'auto';
+              } else {
+                  this.style.overflowY = 'hidden';
+              }
+            }
+        });
+    </script>
+</body></html>

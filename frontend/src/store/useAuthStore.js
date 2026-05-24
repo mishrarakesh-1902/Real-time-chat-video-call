@@ -13,7 +13,7 @@ const getSocketUrl = () => {
   }
   return import.meta.env.PROD
     ? "https://real-time-chat-video-call-3n4r.onrender.com"
-    : "http://localhost:3000";
+    : "http://localhost:5000";
 };
 
 const SOCKET_URL = getSocketUrl();

@@ -25,6 +25,7 @@ const corsOriginCheck = (origin, callback) => {
   if (!origin) return callback(null, true);
   if (allowedOrigins.includes(origin)) return callback(null, true);
   if (origin.includes(".onrender.com")) return callback(null, true);
+  if (origin.startsWith("http://localhost:")) return callback(null, true);
   return callback(new Error("CORS not allowed"));
 };
 

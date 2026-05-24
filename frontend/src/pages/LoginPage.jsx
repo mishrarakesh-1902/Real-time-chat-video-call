@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { MessageCircle, Mail, Lock, Eye, EyeOff, Loader2, ArrowRight } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 
 function LoginPage() {
@@ -14,156 +13,129 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-surface-50 flex">
-      {/* Left Side - Form */}
-      <div className="flex-1 flex items-center justify-center p-4 md:p-12">
-        <div className="w-full max-w-md px-4 sm:px-0">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 mb-8">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">
-              <MessageCircle className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-xl font-bold text-surface-900">ChatFlow</span>
-          </Link>
-
-          {/* Heading */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-surface-900 mb-2">Welcome back</h1>
-            <p className="text-surface-500">Enter your credentials to access your account</p>
+    <div className="dark bg-[#111316] text-[#e2e2e6] min-h-screen flex items-center justify-center relative overflow-hidden font-sans">
+      {/* Ambient Background Effects */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute rounded-full blur-[80px] opacity-40 w-[600px] h-[600px] bg-[#aec6ff]/20 -top-[200px] -left-[100px] animate-pulse" style={{ animationDuration: '8s' }}></div>
+        <div className="absolute rounded-full blur-[80px] opacity-40 w-[800px] h-[800px] bg-[#451dc6]/20 -bottom-[300px] -right-[200px] animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }}></div>
+      </div>
+      
+      {/* Main Content Canvas */}
+      <main className="relative z-10 w-full max-w-md px-4 md:px-0">
+        {/* Login Card */}
+        <div 
+          className="rounded-[2rem] p-8 md:p-10 flex flex-col gap-8 relative overflow-hidden"
+          style={{
+            background: 'rgba(255, 255, 255, 0.03)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)'
+          }}
+        >
+          {/* Subtle Inner Glow Top Edge */}
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+          
+          {/* Header Section */}
+          <div className="text-center flex flex-col gap-2">
+            <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#aec6ff] to-[#c9bfff]">ChatFlow</h1>
+            <p className="text-base text-[#c2c6d5]">Sign in to continue your conversations.</p>
           </div>
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          
+          {/* Form Section */}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             {/* Email Input */}
-            <div>
-              <label className="block text-sm font-medium text-surface-700 mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-surface-400" />
-                <input
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-[#c2c6d5] ml-1" htmlFor="email">Email</label>
+              <div className="relative flex items-center rounded-xl bg-[#282a2d]/50 border border-[rgba(255,255,255,0.12)] transition-all duration-300 focus-within:shadow-[0_0_0_1px_#aec6ff,0_0_12px_rgba(174,198,255,0.2)] focus-within:border-transparent">
+                <span className="material-symbols-outlined text-[#8c909f] ml-4 absolute pointer-events-none">mail</span>
+                <input 
+                  className="w-full bg-transparent border-none rounded-xl py-3 pl-12 pr-4 text-[#e2e2e6] placeholder:text-[#424753] focus:ring-0 text-base outline-none" 
+                  id="email" 
+                  name="email" 
+                  placeholder="you@example.com" 
+                  required 
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="input-field pl-12"
-                  placeholder="you@example.com"
-                  required
                 />
               </div>
             </div>
-
+            
             {/* Password Input */}
-            <div>
-              <label className="block text-sm font-medium text-surface-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-surface-400" />
-                <input
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between items-center ml-1 pr-1">
+                <label className="text-sm text-[#c2c6d5]" htmlFor="password">Password</label>
+                <a className="text-sm text-[#aec6ff] hover:text-[#d8e2ff] transition-colors" href="#">Forgot?</a>
+              </div>
+              <div className="relative flex items-center rounded-xl bg-[#282a2d]/50 border border-[rgba(255,255,255,0.12)] transition-all duration-300 focus-within:shadow-[0_0_0_1px_#aec6ff,0_0_12px_rgba(174,198,255,0.2)] focus-within:border-transparent">
+                <span className="material-symbols-outlined text-[#8c909f] ml-4 absolute pointer-events-none">lock</span>
+                <input 
+                  className="w-full bg-transparent border-none rounded-xl py-3 pl-12 pr-12 text-[#e2e2e6] placeholder:text-[#424753] focus:ring-0 text-base outline-none" 
+                  id="password" 
+                  name="password" 
+                  placeholder="••••••••" 
+                  required 
                   type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="input-field pl-12 pr-12"
-                  placeholder="Enter your password"
-                  required
                 />
-                <button
+                <button 
+                  aria-label="Toggle password visibility" 
+                  className="absolute right-4 text-[#8c909f] hover:text-[#e2e2e6] transition-colors focus:outline-none" 
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-surface-400 hover:text-surface-600"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  <span className="material-symbols-outlined">
+                    {showPassword ? 'visibility' : 'visibility_off'}
+                  </span>
                 </button>
               </div>
             </div>
-
-            {/* Remember & Forgot */}
-            <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded border-surface-300 text-primary-600 focus:ring-primary-500" />
-                <span className="text-sm text-surface-600">Remember me</span>
-              </label>
-              <a href="#" className="text-sm text-primary-600 hover:text-primary-700 font-medium">
-                Forgot password?
-              </a>
-            </div>
-
-            {/* Submit Button */}
+            
+            {/* Primary Action */}
             <button 
-              type="submit" 
-              className="btn-primary w-full py-3.5 text-lg"
+              className="w-full mt-2 py-4 rounded-full bg-gradient-to-r from-[#3578E5] to-[#7B61FF] text-white font-semibold text-lg hover:opacity-90 active:scale-[0.98] transition-all shadow-[0_8px_20px_-6px_rgba(53,120,229,0.5)] flex justify-center items-center gap-2 group disabled:opacity-50" 
+              type="submit"
               disabled={isLoggingIn}
             >
               {isLoggingIn ? (
-                <span className="flex items-center justify-center gap-2">
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Signing in...
-                </span>
+                <>Signing in...</>
               ) : (
-                <span className="flex items-center justify-center gap-2">
-                  Sign In
-                  <ArrowRight className="w-5 h-5" />
-                </span>
+                <>
+                  Log In
+                  <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </>
               )}
             </button>
           </form>
-
+          
           {/* Divider */}
-          <div className="flex items-center gap-4 my-8">
-            <div className="flex-1 h-px bg-surface-200" />
-            <span className="text-sm text-surface-400">or</span>
-            <div className="flex-1 h-px bg-surface-200" />
-          </div>
-
-          {/* Sign Up Link */}
-          <p className="text-center text-surface-500">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-primary-600 hover:text-primary-700 font-medium">
-              Create one
-            </Link>
-          </p>
-
-          {/* Back to Home */}
-          <div className="mt-6 text-center">
-            <Link to="/" className="text-sm text-surface-400 hover:text-surface-600">
-              ← Back to home
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Side - Illustration */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-primary-600 to-accent-600 items-center justify-center p-12">
-        <div className="max-w-lg text-center text-white">
-          <div className="mb-8">
-            <MessageCircle className="w-24 h-24 mx-auto mb-6 opacity-90" />
-            <h2 className="text-3xl font-bold mb-4">Connect with Confidence</h2>
-            <p className="text-lg opacity-80">
-              Experience beautiful design, seamless messaging, and crystal-clear video calls.
-            </p>
+          <div className="flex items-center gap-4 py-2">
+            <div className="h-[1px] flex-1 bg-[rgba(255,255,255,0.12)]"></div>
+            <span className="text-sm text-[#c2c6d5] uppercase tracking-widest">or continue with</span>
+            <div className="h-[1px] flex-1 bg-[rgba(255,255,255,0.12)]"></div>
           </div>
           
-          {/* Features */}
-          <div className="grid grid-cols-2 gap-4 mt-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-3xl font-bold">10M+</div>
-              <div className="text-sm opacity-80">Active Users</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-3xl font-bold">99.9%</div>
-              <div className="text-sm opacity-80">Uptime</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-3xl font-bold">256-bit</div>
-              <div className="text-sm opacity-80">Encryption</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-3xl font-bold">24/7</div>
-              <div className="text-sm opacity-80">Support</div>
-            </div>
+          {/* Social Logins */}
+          <div className="flex gap-4">
+            <button className="flex-1 py-3 px-4 rounded-xl border border-[rgba(255,255,255,0.12)] hover:bg-[#333538] transition-colors flex justify-center items-center gap-2" style={{ background: 'rgba(255, 255, 255, 0.08)' }}>
+              <span className="text-base font-medium text-[#e2e2e6]">Google</span>
+            </button>
+            <button className="flex-1 py-3 px-4 rounded-xl border border-[rgba(255,255,255,0.12)] hover:bg-[#333538] transition-colors flex justify-center items-center gap-2" style={{ background: 'rgba(255, 255, 255, 0.08)' }}>
+              <span className="text-base font-medium text-[#e2e2e6]">Apple</span>
+            </button>
+          </div>
+          
+          {/* Footer Link */}
+          <div className="text-center mt-2">
+            <p className="text-sm text-[#c2c6d5]">
+              Don't have an account?{' '}
+              <Link className="text-[#aec6ff] hover:text-[#d8e2ff] font-semibold transition-colors" to="/signup">Sign up</Link>
+            </p>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

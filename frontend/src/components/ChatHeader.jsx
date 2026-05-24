@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Video, Phone, MoreVertical, Search, X } from 'lucide-react';
 import { useChatStore } from '../store/useChatStore';
 import { useAuthStore } from '../store/useAuthStore';
 import toast from 'react-hot-toast';
@@ -27,74 +26,64 @@ function ChatHeader() {
   };
 
   return (
-    <div className="px-6 py-4 border-b border-surface-200 bg-white flex items-center justify-between">
-      {/* Left - User Info */}
-      <div className="flex items-center gap-3">
+    <header className="h-20 px-6 md:px-10 flex justify-between items-center z-30 shrink-0 shadow-sm border-b border-[rgba(255,255,255,0.12)]" style={{ background: 'rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(40px)', boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1)' }}>
+      <div className="flex items-center gap-4">
         <div className="relative">
-          <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-surface-100">
-            <img
-              src={selectedUser?.profilePic || "/avatar.png"}
-              alt={selectedUser?.fullName}
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <img 
+            className="w-12 h-12 rounded-full object-cover ring-1 ring-[rgba(255,255,255,0.12)]" 
+            src={selectedUser?.profilePic?.trim() ? selectedUser.profilePic : "/avatar.png"} 
+            alt={selectedUser?.fullName} 
+            onError={(e) => { e.target.onerror = null; e.target.src = "/avatar.png"; }}
+          />
           {isOnline && (
-            <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-accent-500 rounded-full ring-2 ring-white" />
+            <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#25C2A0] border-2 border-[#111316] rounded-full shadow-[0_0_8px_rgba(37,194,160,0.5)]"></div>
           )}
         </div>
-
         <div>
-          <h3 className="font-semibold text-surface-900">
-            {selectedUser?.fullName || 'Unknown User'}
-          </h3>
-          <p className="text-sm text-surface-500">
-            {isOnline ? 'Online' : 'Offline'}
-          </p>
+          <h1 className="text-xl md:text-2xl font-semibold text-[#e2e2e6] tracking-tight">{selectedUser?.fullName || 'Unknown User'}</h1>
+          {isOnline ? (
+            <p className="text-sm text-[#25C2A0] font-medium flex items-center gap-1.5">
+              Online
+            </p>
+          ) : (
+            <p className="text-sm text-[#8c909f]">Offline</p>
+          )}
         </div>
       </div>
-
-      {/* Right - Actions */}
-      <div className="flex items-center gap-2">
-        {/* Search */}
-        <button className="p-2.5 rounded-xl text-surface-400 hover:text-surface-600 
-                         hover:bg-surface-50 transition-colors">
-          <Search className="w-5 h-5" />
-        </button>
-
-        {/* Voice Call */}
-        <button className="p-2.5 rounded-xl text-surface-400 hover:text-surface-600 
-                         hover:bg-surface-50 transition-colors"
-                title="Voice call coming soon">
-          <Phone className="w-5 h-5" />
-        </button>
-
-        {/* Video Call */}
+      
+      <div className="flex items-center gap-2 md:gap-3">
         <button 
           onClick={handleVideoCall}
           disabled={!selectedUser?._id || !isOnline || isCalling}
-          className={`p-2.5 rounded-xl transition-colors ${
+          className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm ${
             !selectedUser?._id || !isOnline || isCalling
-              ? 'text-surface-300 cursor-not-allowed'
-              : 'text-surface-400 hover:text-primary-600 hover:bg-primary-50'
+              ? 'bg-[rgba(255,255,255,0.03)] text-[#424753] border border-transparent cursor-not-allowed'
+              : 'bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.12)] text-[#e2e2e6] hover:bg-[#333538] hover:scale-105'
           }`}
           title={!selectedUser?._id ? 'Select a user' : !isOnline ? 'User is offline' : 'Start video call'}
         >
           {isCalling ? (
-            <span className="flex items-center gap-2">
-              <span className="w-5 h-5 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
-            </span>
+            <span className="w-5 h-5 border-2 border-[#aec6ff] border-t-transparent rounded-full animate-spin" />
           ) : (
-            <Video className="w-5 h-5" />
+             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>videocam</span>
           )}
         </button>
-
-        {/* More Options */}
-        <button className="p-2.5 rounded-xl text-surface-400 hover:text-surface-600 
-                         hover:bg-surface-50 transition-colors">
-          <MoreVertical className="w-5 h-5" />
+        
+        <button className="w-10 h-10 rounded-full bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.12)] flex items-center justify-center text-[#e2e2e6] hover:bg-[#333538] hover:scale-105 transition-all shadow-sm">
+          <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>call</span>
+        </button>
+        
+        <div className="w-px h-6 bg-[rgba(255,255,255,0.12)] mx-1 hidden sm:block"></div>
+        
+        <button className="hidden sm:flex w-10 h-10 rounded-full items-center justify-center text-[#c2c6d5] hover:text-[#e2e2e6] hover:bg-[rgba(255,255,255,0.08)] transition-all">
+          <span className="material-symbols-outlined">search</span>
+        </button>
+        
+        <button className="w-10 h-10 rounded-full flex items-center justify-center text-[#c2c6d5] hover:text-[#e2e2e6] hover:bg-[rgba(255,255,255,0.08)] transition-all">
+          <span className="material-symbols-outlined">more_vert</span>
         </button>
       </div>
-    </div>
+    </header>
   );
 }
 

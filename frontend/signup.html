@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign Up - ChatFlow</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"inverse-on-surface": "#2f3034", "glass-border": "rgba(255, 255, 255, 0.12)", "primary-container": "#508efc", surface: "#111316", "secondary-fixed-dim": "#c9bfff", error: "#ffb4ab", "on-primary-container": "#00285d", "surface-bright": "#37393c", "inverse-primary": "#005ac3", "surface-container-high": "#282a2d", secondary: "#c9bfff", "on-primary-fixed": "#001a42", primary: "#aec6ff", "gradient-end": "#7B61FF", "tertiary-container": "#00a484", "on-error-container": "#ffdad6", "surface-dim": "#111316", "primary-fixed-dim": "#aec6ff", "on-background": "#e2e2e6", "glass-surface": "rgba(255, 255, 255, 0.08)", "on-secondary-container": "#b7aaff", "primary-fixed": "#d8e2ff", "on-surface-variant": "#c2c6d5", "surface-tint": "#aec6ff", "surface-container-lowest": "#0c0e11", "on-tertiary-fixed": "#002018", "inverse-surface": "#e2e2e6", "on-primary": "#002e6a", background: "#111316", "outline-variant": "#424753", "on-secondary-fixed-variant": "#451dc6", "gradient-start": "#3578E5", "on-surface": "#e2e2e6", "surface-variant": "#333538", "surface-container-highest": "#333538", tertiary: "#3edeb7", "tertiary-fixed-dim": "#3edeb7", "on-secondary-fixed": "#1a0063", "surface-container": "#1e2023", "error-container": "#93000a", "status-online": "#25C2A0", "secondary-container": "#451dc6", "secondary-fixed": "#e5deff", "tertiary-fixed": "#63fbd2", "status-busy": "#FFB800", "surface-container-low": "#1a1c1f", "danger-red": "#FF4D4F", "on-primary-fixed-variant": "#004395", outline: "#8c909f", "on-tertiary-fixed-variant": "#005140", "on-secondary": "#2e009c", "on-tertiary-container": "#003025", "on-tertiary": "#00382b", "on-error": "#690005"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-max": "1440px", "stack-xl": "32px", "stack-3xl": "64px", "margin-desktop": "40px", gutter: "24px", unit: "8px", "margin-mobile": "16px"}, fontFamily: {"title-md": ["Inter"], "display-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "label-caps": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"title-md": ["20px", {lineHeight: "28px", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-lg-mobile": ["24px", {lineHeight: "32px", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-sm": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700"}]}}}};</script>
+<style>
+        /* Base typography setup for Inter font to match design system */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Glassmorphism Inner Glow Utility */
+        .glass-inner-glow {
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Input Autocomplete Style Override for Dark Mode */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px #1a1c1f inset !important;
+            -webkit-text-fill-color: #e2e2e6 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased min-h-screen flex items-center justify-center p-margin-mobile md:p-margin-desktop relative overflow-hidden selection:bg-primary selection:text-on-primary">
+<!-- Ambient Background Glows -->
+<div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+<div class="absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-gradient-start opacity-10 blur-[120px] mix-blend-screen"></div>
+<div class="absolute -bottom-[20%] -right-[10%] w-[50vw] h-[50vw] rounded-full bg-gradient-end opacity-10 blur-[120px] mix-blend-screen"></div>
+</div>
+<!-- Main Card Container -->
+<main class="w-full max-w-md relative z-10 animate-fade-in-up">
+<!-- Glass Card Surface -->
+<div class="bg-glass-surface backdrop-blur-[20px] border border-glass-border rounded-[24px] p-8 md:p-10 shadow-2xl glass-inner-glow flex flex-col gap-stack-xl">
+<!-- Header Section -->
+<header class="flex flex-col items-center text-center gap-4">
+<!-- App Icon/Logo -->
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gradient-start to-gradient-end p-[1px] shadow-lg shadow-gradient-start/20">
+<div class="w-full h-full rounded-2xl bg-surface-container-low flex items-center justify-center glass-inner-glow">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">forum</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Create Account</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Join ChatFlow to connect instantly.</p>
+</div>
+</header>
+<!-- Sign Up Form -->
+<form action="#" class="flex flex-col gap-6" method="POST">
+<!-- Full Name Field -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1" for="fullName">Full Name</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors pointer-events-none">person</span>
+<input class="w-full bg-surface-container-low/50 border border-glass-border rounded-xl py-3 pl-12 pr-4 font-body-lg text-body-lg text-on-surface placeholder:text-outline focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 focus:bg-surface-container-low transition-all duration-300" id="fullName" name="fullName" placeholder="Alex Rivers" required="" type="text"/>
+</div>
+</div>
+<!-- Email Field -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1" for="email">Email</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors pointer-events-none">mail</span>
+<input class="w-full bg-surface-container-low/50 border border-glass-border rounded-xl py-3 pl-12 pr-4 font-body-lg text-body-lg text-on-surface placeholder:text-outline focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 focus:bg-surface-container-low transition-all duration-300" id="email" name="email" placeholder="alex@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1" for="password">Password</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors pointer-events-none">lock</span>
+<input class="w-full bg-surface-container-low/50 border border-glass-border rounded-xl py-3 pl-12 pr-12 font-body-lg text-body-lg text-on-surface placeholder:text-outline focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 focus:bg-surface-container-low transition-all duration-300" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface focus:text-on-surface transition-colors p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-glass-border" onclick="togglePassword()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="visibilityIcon">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="w-full mt-2 bg-gradient-to-r from-gradient-start to-gradient-end hover:from-primary-container hover:to-secondary-container text-white font-title-md text-title-md rounded-full py-3.5 shadow-[0_4px_14px_0_rgba(53,120,229,0.39)] hover:shadow-[0_6px_20px_rgba(53,120,229,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 glass-inner-glow relative overflow-hidden group" type="submit">
+<span class="relative z-10">Create Account</span>
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out rounded-full blur-md"></div>
+</button>
+</form>
+<!-- Footer Link -->
+<footer class="text-center mt-2">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                    Already have an account? 
+                    <a class="text-primary hover:text-primary-fixed hover:underline underline-offset-4 transition-colors font-medium ml-1 focus:outline-none focus:ring-2 focus:ring-primary rounded-sm" href="#">Log in</a>
+</p>
+</footer>
+</div>
+</main>
+<!-- Simple Script for Password Toggle -->
+<script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const visibilityIcon = document.getElementById('visibilityIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                visibilityIcon.textContent = 'visibility';
+            } else {
+                passwordInput.type = 'password';
+                visibilityIcon.textContent = 'visibility_off';
+            }
+        }
+    </script>
+</body></html>

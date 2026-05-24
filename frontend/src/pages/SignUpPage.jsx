@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { MessageCircle, Mail, Lock, User, Eye, EyeOff, Loader2, ArrowRight, Check } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 
 function SignUpPage() {
@@ -13,201 +12,129 @@ function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const { signup, isSigningUp } = useAuthStore();
 
-  const passwordRequirements = [
-    { met: formData.password.length >= 8, text: 'At least 8 characters' },
-    { met: /[A-Z]/.test(formData.password), text: 'One uppercase letter' },
-    { met: /[0-9]/.test(formData.password), text: 'One number' },
-  ];
-
   const handleSubmit = (e) => {
     e.preventDefault();
     signup(formData);
   };
 
   return (
-    <div className="min-h-screen bg-surface-50 flex">
-      {/* Left Side - Illustration */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-primary-600 to-accent-600 items-center justify-center p-12">
-        <div className="max-w-lg text-center text-white">
-          <MessageCircle className="w-24 h-24 mx-auto mb-6 opacity-90" />
-          <h2 className="text-3xl font-bold mb-4">Join ChatFlow Today</h2>
-          <p className="text-lg opacity-80 mb-8">
-            Create your account and start connecting with friends, family, and colleagues in seconds.
-          </p>
-
-          {/* Benefits */}
-          <div className="space-y-4 text-left">
-            {[
-              'Unlimited message history',
-              'HD video calls up to 4 participants',
-              'End-to-end encryption',
-              'Cross-platform sync',
-            ].map((benefit, index) => (
-              <div key={index} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3">
-                <Check className="w-5 h-5 text-accent-300" />
-                <span>{benefit}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+    <div className="dark bg-[#0c0e11] text-[#e2e2e6] antialiased min-h-screen flex items-center justify-center p-4 md:p-10 relative overflow-hidden selection:bg-[#aec6ff] selection:text-[#002e6a]">
+      {/* Ambient Background Glows */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-[#3578E5] opacity-10 blur-[120px] mix-blend-screen"></div>
+        <div className="absolute -bottom-[20%] -right-[10%] w-[50vw] h-[50vw] rounded-full bg-[#7B61FF] opacity-10 blur-[120px] mix-blend-screen"></div>
       </div>
-
-      {/* Right Side - Form */}
-      <div className="flex-1 flex items-center justify-center p-6 md:p-12">
-        <div className="w-full max-w-md">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 mb-8">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">
-              <MessageCircle className="w-6 h-6 text-white" />
+      
+      {/* Main Card Container */}
+      <main className="w-full max-w-md relative z-10 animate-fade-in-up">
+        {/* Glass Card Surface */}
+        <div 
+          className="backdrop-blur-[20px] border border-[rgba(255,255,255,0.12)] rounded-[24px] p-8 md:p-10 shadow-2xl flex flex-col gap-8"
+          style={{ background: 'rgba(255, 255, 255, 0.08)', boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}
+        >
+          {/* Header Section */}
+          <header className="flex flex-col items-center text-center gap-4">
+            {/* App Icon/Logo */}
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#3578E5] to-[#7B61FF] p-[1px] shadow-lg shadow-[#3578E5]/20">
+              <div 
+                className="w-full h-full rounded-2xl bg-[#1a1c1f] flex items-center justify-center"
+                style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1)' }}
+              >
+                <span className="material-symbols-outlined text-[#aec6ff] text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>forum</span>
+              </div>
             </div>
-            <span className="text-xl font-bold text-surface-900">ChatFlow</span>
-          </Link>
-
-          {/* Heading */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-surface-900 mb-2">Create an account</h1>
-            <p className="text-surface-500">Get started with ChatFlow — it's free</p>
-          </div>
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Full Name Input */}
-            <div>
-              <label className="block text-sm font-medium text-surface-700 mb-2">
-                Full Name
-              </label>
-              <div className="relative">
-                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-surface-400" />
-                <input
+            <div className="flex flex-col gap-2 mt-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#e2e2e6]">Create Account</h1>
+              <p className="text-base text-[#c2c6d5]">Join ChatFlow to connect instantly.</p>
+            </div>
+          </header>
+          
+          {/* Sign Up Form */}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            {/* Full Name Field */}
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-bold tracking-wider text-[#c2c6d5] ml-1 uppercase" htmlFor="fullName">Full Name</label>
+              <div className="relative group">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8c909f] group-focus-within:text-[#aec6ff] transition-colors pointer-events-none">person</span>
+                <input 
+                  className="w-full bg-[#1a1c1f]/50 border border-[rgba(255,255,255,0.12)] rounded-xl py-3 pl-12 pr-4 text-base text-[#e2e2e6] placeholder:text-[#8c909f] focus:outline-none focus:border-[#aec6ff]/50 focus:ring-1 focus:ring-[#aec6ff]/50 focus:bg-[#1a1c1f] transition-all duration-300" 
+                  id="fullName" 
+                  name="fullName" 
+                  placeholder="Alex Rivers" 
+                  required 
                   type="text"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="input-field pl-12"
-                  placeholder="John Doe"
-                  required
                 />
               </div>
             </div>
-
-            {/* Email Input */}
-            <div>
-              <label className="block text-sm font-medium text-surface-700 mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-surface-400" />
-                <input
+            
+            {/* Email Field */}
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-bold tracking-wider text-[#c2c6d5] ml-1 uppercase" htmlFor="email">Email</label>
+              <div className="relative group">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8c909f] group-focus-within:text-[#aec6ff] transition-colors pointer-events-none">mail</span>
+                <input 
+                  className="w-full bg-[#1a1c1f]/50 border border-[rgba(255,255,255,0.12)] rounded-xl py-3 pl-12 pr-4 text-base text-[#e2e2e6] placeholder:text-[#8c909f] focus:outline-none focus:border-[#aec6ff]/50 focus:ring-1 focus:ring-[#aec6ff]/50 focus:bg-[#1a1c1f] transition-all duration-300" 
+                  id="email" 
+                  name="email" 
+                  placeholder="alex@example.com" 
+                  required 
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="input-field pl-12"
-                  placeholder="you@example.com"
-                  required
                 />
               </div>
             </div>
-
-            {/* Password Input */}
-            <div>
-              <label className="block text-sm font-medium text-surface-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-surface-400" />
-                <input
+            
+            {/* Password Field */}
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-bold tracking-wider text-[#c2c6d5] ml-1 uppercase" htmlFor="password">Password</label>
+              <div className="relative group">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8c909f] group-focus-within:text-[#aec6ff] transition-colors pointer-events-none">lock</span>
+                <input 
+                  className="w-full bg-[#1a1c1f]/50 border border-[rgba(255,255,255,0.12)] rounded-xl py-3 pl-12 pr-12 text-base text-[#e2e2e6] placeholder:text-[#8c909f] focus:outline-none focus:border-[#aec6ff]/50 focus:ring-1 focus:ring-[#aec6ff]/50 focus:bg-[#1a1c1f] transition-all duration-300" 
+                  id="password" 
+                  name="password" 
+                  placeholder="••••••••" 
+                  required 
                   type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="input-field pl-12 pr-12"
-                  placeholder="Create a password"
-                  required
                 />
-                <button
+                <button 
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8c909f] hover:text-[#e2e2e6] focus:text-[#e2e2e6] transition-colors p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgba(255,255,255,0.12)]" 
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-surface-400 hover:text-surface-600"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  <span className="material-symbols-outlined text-[20px]">
+                    {showPassword ? 'visibility' : 'visibility_off'}
+                  </span>
                 </button>
               </div>
-              
-              {/* Password Requirements */}
-              {formData.password && (
-                <div className="mt-2 space-y-1">
-                  {passwordRequirements.map((req, index) => (
-                    <div 
-                      key={index} 
-                      className={`flex items-center gap-2 text-xs ${
-                        req.met ? 'text-accent-600' : 'text-surface-400'
-                      }`}
-                    >
-                      <Check className={`w-3 h-3 ${req.met ? 'opacity-100' : 'opacity-50'}`} />
-                      {req.text}
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
-
-            {/* Terms */}
-            <div className="flex items-start gap-2">
-              <input 
-                type="checkbox" 
-                id="terms"
-                className="w-4 h-4 mt-0.5 rounded border-surface-300 text-primary-600 focus:ring-primary-500"
-                required
-              />
-              <label htmlFor="terms" className="text-sm text-surface-600">
-                I agree to the{' '}
-                <a href="#" className="text-primary-600 hover:text-primary-700">Terms of Service</a>
-                {' '}and{' '}
-                <a href="#" className="text-primary-600 hover:text-primary-700">Privacy Policy</a>
-              </label>
-            </div>
-
+            
             {/* Submit Button */}
             <button 
-              type="submit" 
-              className="btn-primary w-full py-3.5 text-lg"
+              className="w-full mt-2 bg-gradient-to-r from-[#3578E5] to-[#7B61FF] hover:from-[#508efc] hover:to-[#451dc6] text-white font-semibold text-xl rounded-full py-3.5 shadow-[0_4px_14px_0_rgba(53,120,229,0.39)] hover:shadow-[0_6px_20px_rgba(53,120,229,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 relative overflow-hidden group disabled:opacity-50" 
+              type="submit"
               disabled={isSigningUp}
+              style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1)' }}
             >
-              {isSigningUp ? (
-                <span className="flex items-center justify-center gap-2">
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Creating account...
-                </span>
-              ) : (
-                <span className="flex items-center justify-center gap-2">
-                  Create Account
-                  <ArrowRight className="w-5 h-5" />
-                </span>
-              )}
+              <span className="relative z-10">{isSigningUp ? 'Creating...' : 'Create Account'}</span>
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out rounded-full blur-md"></div>
             </button>
           </form>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4 my-8">
-            <div className="flex-1 h-px bg-surface-200" />
-            <span className="text-sm text-surface-400">or</span>
-            <div className="flex-1 h-px bg-surface-200" />
-          </div>
-
-          {/* Sign In Link */}
-          <p className="text-center text-surface-500">
-            Already have an account?{' '}
-            <Link to="/login" className="text-primary-600 hover:text-primary-700 font-medium">
-              Sign in
-            </Link>
-          </p>
-
-          {/* Back to Home */}
-          <div className="mt-6 text-center">
-            <Link to="/" className="text-sm text-surface-400 hover:text-surface-600">
-              ← Back to home
-            </Link>
-          </div>
+          
+          {/* Footer Link */}
+          <footer className="text-center mt-2">
+            <p className="text-sm text-[#c2c6d5]">
+              Already have an account?{' '}
+              <Link className="text-[#aec6ff] hover:text-[#d8e2ff] hover:underline underline-offset-4 transition-colors font-medium ml-1 focus:outline-none focus:ring-2 focus:ring-[#aec6ff] rounded-sm" to="/login">Log in</Link>
+            </p>
+          </footer>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

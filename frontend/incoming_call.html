@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChatFlow - Incoming Call</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"inverse-on-surface": "#2f3034", "glass-border": "rgba(255, 255, 255, 0.12)", "primary-container": "#508efc", surface: "#111316", "secondary-fixed-dim": "#c9bfff", error: "#ffb4ab", "on-primary-container": "#00285d", "surface-bright": "#37393c", "inverse-primary": "#005ac3", "surface-container-high": "#282a2d", secondary: "#c9bfff", "on-primary-fixed": "#001a42", primary: "#aec6ff", "gradient-end": "#7B61FF", "tertiary-container": "#00a484", "on-error-container": "#ffdad6", "surface-dim": "#111316", "primary-fixed-dim": "#aec6ff", "on-background": "#e2e2e6", "glass-surface": "rgba(255, 255, 255, 0.08)", "on-secondary-container": "#b7aaff", "primary-fixed": "#d8e2ff", "on-surface-variant": "#c2c6d5", "surface-tint": "#aec6ff", "surface-container-lowest": "#0c0e11", "on-tertiary-fixed": "#002018", "inverse-surface": "#e2e2e6", "on-primary": "#002e6a", background: "#111316", "outline-variant": "#424753", "on-secondary-fixed-variant": "#451dc6", "gradient-start": "#3578E5", "on-surface": "#e2e2e6", "surface-variant": "#333538", "surface-container-highest": "#333538", tertiary: "#3edeb7", "tertiary-fixed-dim": "#3edeb7", "on-secondary-fixed": "#1a0063", "surface-container": "#1e2023", "error-container": "#93000a", "status-online": "#25C2A0", "secondary-container": "#451dc6", "secondary-fixed": "#e5deff", "tertiary-fixed": "#63fbd2", "status-busy": "#FFB800", "surface-container-low": "#1a1c1f", "danger-red": "#FF4D4F", "on-primary-fixed-variant": "#004395", outline: "#8c909f", "on-tertiary-fixed-variant": "#005140", "on-secondary": "#2e009c", "on-tertiary-container": "#003025", "on-tertiary": "#00382b", "on-error": "#690005"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-max": "1440px", "stack-xl": "32px", "stack-3xl": "64px", "margin-desktop": "40px", gutter: "24px", unit: "8px", "margin-mobile": "16px"}, fontFamily: {"title-md": ["Inter"], "display-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "label-caps": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"title-md": ["20px", {lineHeight: "28px", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-lg-mobile": ["24px", {lineHeight: "32px", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-sm": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700"}]}}}};</script>
+<style>
+        @keyframes radar-pulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        .animate-radar {
+            animation: radar-pulse 3s cubic-bezier(0.0, 0.0, 0.2, 1) infinite;
+        }
+        .animate-radar-delay {
+            animation: radar-pulse 3s cubic-bezier(0.0, 0.0, 0.2, 1) 1.5s infinite;
+        }
+        .bg-mesh-pattern {
+            background-image: radial-gradient(at 40% 20%, hsla(216,100%,74%,0.15) 0px, transparent 50%),
+                              radial-gradient(at 80% 0%, hsla(258,100%,68%,0.15) 0px, transparent 50%),
+                              radial-gradient(at 0% 50%, hsla(216,100%,74%,0.1) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden font-body-lg text-body-lg selection:bg-primary-container selection:text-on-primary-container">
+<div class="fixed inset-0 z-0 bg-mesh-pattern blur-md opacity-30 pointer-events-none"></div>
+<div class="fixed inset-0 z-10 backdrop-blur-3xl bg-surface-container-lowest/80 flex items-center justify-center p-margin-mobile md:p-margin-desktop">
+<div class="relative flex flex-col items-center justify-center p-stack-3xl w-full max-w-lg rounded-[2.5rem] bg-glass-surface border border-glass-border shadow-[0_32px_64px_-16px_rgba(0,0,0,0.8),_inset_0_1px_0_rgba(255,255,255,0.1)] overflow-hidden transition-transform duration-500 hover:scale-[1.02]">
+<div class="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent opacity-60 pointer-events-none"></div>
+<div class="relative w-48 h-48 flex items-center justify-center mb-stack-xl z-20">
+<div class="absolute inset-0 rounded-full bg-primary/30 animate-radar"></div>
+<div class="absolute inset-4 rounded-full bg-primary/40 animate-radar-delay"></div>
+<div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-surface shadow-[0_0_40px_rgba(174,198,255,0.3)] z-10 ring-2 ring-primary ring-offset-4 ring-offset-surface">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="A high-resolution, professional portrait of a modern young man with a slight, welcoming smile, illuminated by soft, cool-toned cinematic lighting that highlights his features against a deep, dark tech-inspired background. The image exudes a premium, high-fidelity aesthetic consistent with a luxury communication platform, emphasizing clarity and sophistication." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKIRwqgdw3nIsVOoJn-zi6YVMtRmuwQn16qnvvHSPzzSqPz1AQwvz1Zs6a6jhHEMuuWOhufGneh1SeneIGWQIGCjtfnPfZ74BSoNDOZ7N--2M5ZTDHeS0mXIY8TNNm_PJEQlui0wB3XJxP3q5D7ZRrSn0dVhj5Ktxuqzo7K1iSPqwrnUjU6AeG-d6AeH047vGkzO1wYTHPYDOk8nZHEa5XYG9-ZGjBvlhtkYTTxcbODACj0DfZdWXYKhOeeEO3Gbw8ZDy2gMgX8wc"/>
+</div>
+</div>
+<h2 class="font-display-lg text-display-lg md:text-display-lg text-on-surface mb-unit z-20 text-center tracking-tight drop-shadow-md">Jordan Smith</h2>
+<div class="flex items-center gap-2 mb-stack-3xl z-20">
+<span class="w-3 h-3 rounded-full bg-status-online shadow-[0_0_10px_rgba(37,194,160,0.8)] animate-pulse"></span>
+<p class="font-title-md text-title-md text-on-surface-variant">Incoming Video Call...</p>
+</div>
+<div class="flex items-center justify-center gap-stack-3xl z-20 w-full px-margin-desktop">
+<button class="group relative w-16 h-16 rounded-full bg-surface-container-high border border-glass-border flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-error-container hover:border-error hover:shadow-[0_0_30px_rgba(255,180,171,0.3)] focus:outline-none focus:ring-4 focus:ring-error/50">
+<span class="material-symbols-outlined text-[28px] text-on-surface-variant group-hover:text-on-error-container transition-colors" style="font-variation-settings: 'FILL' 1;">close</span>
+</button>
+<button class="group relative w-24 h-24 rounded-full bg-gradient-to-br from-tertiary-container to-tertiary flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-[0_0_50px_rgba(77,221,185,0.5)] focus:outline-none focus:ring-4 focus:ring-tertiary/50 animate-bounce" style="animation-duration: 2.5s;">
+<div class="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
+<span class="material-symbols-outlined text-[40px] text-on-tertiary-container drop-shadow-md" style="font-variation-settings: 'FILL' 1;">videocam</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

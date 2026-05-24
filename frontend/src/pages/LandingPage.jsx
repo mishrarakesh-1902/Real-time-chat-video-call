@@ -1,371 +1,217 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import { 
-  MessageCircle, Video, Shield, Zap, Users, ChevronRight,
-  Star, ArrowRight, CheckCircle, Menu, X
-} from 'lucide-react';
 
 function LandingPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const features = [
-    {
-      icon: MessageCircle,
-      title: 'Real-time Messaging',
-      description: 'Instant messaging with lightning-fast delivery. Stay connected with friends and colleagues worldwide.',
-      color: 'bg-primary-100 text-primary-600'
-    },
-    {
-      icon: Video,
-      title: 'HD Video Calls',
-      description: 'Crystal-clear video calls with up to 4 participants. Perfect for meetings and catching up.',
-      color: 'bg-accent-100 text-accent-600'
-    },
-    {
-      icon: Shield,
-      title: 'End-to-End Encryption',
-      description: 'Your privacy is our priority. All messages and calls are securely encrypted.',
-      color: 'bg-emerald-100 text-emerald-600'
-    },
-    {
-      icon: Zap,
-      title: 'Lightning Fast',
-      description: 'Built for speed with optimized servers globally. Never miss a moment.',
-      color: 'bg-amber-100 text-amber-600'
-    }
-  ];
-
-  const steps = [
-    {
-      number: '01',
-      title: 'Create Your Account',
-      description: 'Sign up in seconds with your email or social accounts. No complex setup required.'
-    },
-    {
-      number: '02',
-      title: 'Add Your Contacts',
-      description: 'Import your contacts or find friends easily. Connect with anyone instantly.'
-    },
-    {
-      number: '03',
-      title: 'Start Chatting',
-      description: 'Send messages, make calls, and share files. Communication made simple.'
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: 'Sarah Johnson',
-      role: 'Product Manager',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
-      content: 'This app has transformed how our team communicates. The video calls are incredibly clear!',
-      rating: 5
-    },
-    {
-      name: 'Michael Chen',
-      role: 'Software Engineer',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
-      content: 'Best chat experience I\'ve had. The interface is beautiful and super intuitive.',
-      rating: 5
-    },
-    {
-      name: 'Emily Davis',
-      role: 'Designer',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
-      content: 'Love the design! It\'s so easy to use and the encryption gives me peace of mind.',
-      rating: 5
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-surface-50">
-      {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/90 backdrop-blur-lg shadow-soft' : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">
-                <MessageCircle className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl font-bold text-surface-900">ChatFlow</span>
-            </div>
-
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#features" className="nav-link">Features</a>
-              <a href="#how-it-works" className="nav-link">How it Works</a>
-              <a href="#testimonials" className="nav-link">Testimonials</a>
-              <Link to="/login" className="btn-ghost">Log In</Link>
-              <Link to="/signup" className="btn-primary">Get Started</Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button 
-              className="md:hidden p-2 rounded-lg hover:bg-surface-100"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
+    <div className="dark text-[#e2e2e6] antialiased font-sans overflow-x-hidden min-h-screen flex flex-col"
+         style={{
+           backgroundColor: '#111316',
+           backgroundImage: 'radial-gradient(circle at top right, rgba(53, 120, 229, 0.15) 0%, transparent 40%), radial-gradient(circle at bottom left, rgba(123, 97, 255, 0.15) 0%, transparent 40%)',
+           backgroundAttachment: 'fixed'
+         }}>
+      
+      {/* Top Navigation */}
+      <nav 
+        className="fixed top-0 w-full z-50 backdrop-blur-xl border-b border-[rgba(255,255,255,0.12)] shadow-sm flex justify-between items-center px-4 md:px-10 h-16 transition-all duration-300"
+        style={{ backgroundColor: scrolled ? 'rgba(17, 19, 22, 0.8)' : 'rgba(255, 255, 255, 0.08)' }}
+      >
+        <div className="flex items-center gap-2 cursor-pointer">
+          <span className="material-symbols-outlined text-[#aec6ff] text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>forum</span>
+          <span className="text-2xl font-bold text-[#aec6ff] tracking-tight">ChatFlow</span>
         </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-surface-100 animate-slide-up">
-            <div className="px-4 py-4 space-y-2">
-              <a href="#features" className="block nav-link">Features</a>
-              <a href="#how-it-works" className="block nav-link">How it Works</a>
-              <a href="#testimonials" className="block nav-link">Testimonials</a>
-              <Link to="/login" className="block nav-link">Log In</Link>
-              <Link to="/signup" className="block btn-primary text-center">Get Started</Link>
-            </div>
-          </div>
-        )}
+        
+        <div className="hidden md:flex items-center gap-8 text-sm">
+          <a className="text-[#c2c6d5] hover:text-[#e2e2e6] transition-colors duration-200" href="#features">Features</a>
+          <a className="text-[#c2c6d5] hover:text-[#e2e2e6] transition-colors duration-200" href="#how-it-works">How it Works</a>
+          <a className="text-[#c2c6d5] hover:text-[#e2e2e6] transition-colors duration-200" href="#testimonials">Testimonials</a>
+        </div>
+        
+        <div className="hidden md:flex items-center gap-6 text-sm">
+          <Link className="text-[#e2e2e6] hover:text-[#aec6ff] transition-colors duration-200" to="/login">Log In</Link>
+          <Link className="text-white px-6 py-2 rounded-full font-bold hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#508efc]/20" style={{ background: 'linear-gradient(135deg, #3578E5, #7B61FF)' }} to="/signup">
+            Get Started
+          </Link>
+        </div>
+        
+        <button className="md:hidden text-[#e2e2e6]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <span className="material-symbols-outlined text-[28px]">{isMenuOpen ? 'close' : 'menu'}</span>
+        </button>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-primary-50 px-4 py-2 rounded-full mb-6 animate-fade-in">
-              <Zap className="w-4 h-4 text-primary-600" />
-              <span className="text-sm font-medium text-primary-700">Now with HD Video Calls</span>
+      {/* Mobile Menu Content */}
+      {isMenuOpen && (
+        <div className="fixed top-16 left-0 right-0 z-40 bg-[#1a1c1f]/95 backdrop-blur-xl border-b border-[rgba(255,255,255,0.12)] p-4 flex flex-col gap-4 text-center md:hidden">
+          <a className="text-[#c2c6d5] hover:text-[#e2e2e6] py-2" href="#features" onClick={() => setIsMenuOpen(false)}>Features</a>
+          <a className="text-[#c2c6d5] hover:text-[#e2e2e6] py-2" href="#how-it-works" onClick={() => setIsMenuOpen(false)}>How it Works</a>
+          <Link className="text-[#e2e2e6] hover:text-[#aec6ff] py-2" to="/login" onClick={() => setIsMenuOpen(false)}>Log In</Link>
+          <Link className="text-white px-6 py-3 rounded-full font-bold mx-auto mt-2" style={{ background: 'linear-gradient(135deg, #3578E5, #7B61FF)' }} to="/signup" onClick={() => setIsMenuOpen(false)}>Get Started</Link>
+        </div>
+      )}
+
+      <main className="flex-grow pt-24 md:pt-32 pb-16 px-4 md:px-10 max-w-[1440px] mx-auto w-full flex flex-col gap-16 md:gap-24">
+        {/* Hero Section */}
+        <section className="flex flex-col md:flex-row items-center gap-16 min-h-[calc(100vh-200px)]">
+          <div className="flex-1 flex flex-col gap-8 z-10">
+            <div className="inline-flex items-center gap-2 border border-[rgba(255,255,255,0.12)] rounded-full px-4 py-1.5 w-fit" style={{ background: 'rgba(255, 255, 255, 0.03)' }}>
+              <span className="w-2 h-2 rounded-full bg-[#25C2A0] shadow-[0_0_8px_rgba(37,194,160,0.6)] animate-pulse"></span>
+              <span className="text-xs text-[#c2c6d5] uppercase tracking-wider font-bold">Now in Public Beta</span>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-surface-900 mb-6 animate-slide-up">
-              Connect Seamlessly with{' '}
-              <span className="text-gradient">ChatFlow</span>
+            <h1 className="text-[40px] leading-[48px] md:text-5xl lg:text-6xl font-bold">
+              Connect Seamlessly with <br className="hidden md:block"/>
+              <span style={{ background: 'linear-gradient(135deg, #aec6ff, #c9bfff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ChatFlow</span>
             </h1>
             
-            <p className="text-xl text-surface-500 mb-8 max-w-2xl mx-auto animate-slide-up">
-              Experience the future of communication. Beautiful design, powerful features, 
-              and uncompromising privacy — all in one app.
+            <p className="text-lg md:text-xl text-[#c2c6d5] max-w-xl">
+              Experience lightning-fast, secure communication. Designed for high-performance teams who demand premium design and uncompromised privacy.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up">
-              <Link to="/signup" className="btn-primary text-lg px-8 py-4">
+            <div className="flex flex-col sm:flex-row gap-6 pt-2">
+              <Link className="text-white px-8 py-3 rounded-full font-bold text-lg hover:shadow-[0_0_20px_rgba(80,142,252,0.4)] active:scale-95 transition-all w-full sm:w-auto flex items-center justify-center gap-2" style={{ background: 'linear-gradient(135deg, #3578E5, #7B61FF)' }} to="/signup">
                 Start Free Trial
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </Link>
-              <a href="#features" className="btn-secondary text-lg px-8 py-4">
+              <a href="#features" className="text-[#e2e2e6] px-8 py-3 rounded-full font-bold text-lg hover:bg-[rgba(255,255,255,0.08)] active:scale-95 transition-all w-full sm:w-auto border border-[rgba(255,255,255,0.12)] text-center cursor-pointer" style={{ background: 'rgba(255, 255, 255, 0.03)' }}>
                 Learn More
               </a>
             </div>
-          </div>
-
-          {/* Hero Image */}
-          <div className="mt-16 relative animate-fade-in">
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-50 via-transparent to-transparent z-10" />
-            <div className="bg-white rounded-2xl shadow-elevated border border-surface-200 overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3 bg-surface-50 border-b border-surface-100">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-400" />
-                  <div className="w-3 h-3 rounded-full bg-amber-400" />
-                  <div className="w-3 h-3 rounded-full bg-green-400" />
-                </div>
-                <div className="flex-1 text-center">
-                  <span className="text-sm text-surface-400">ChatFlow</span>
-                </div>
+            
+            <div className="flex items-center gap-4 mt-8 opacity-70">
+              <div className="flex -space-x-3">
+                <img alt="User" className="w-10 h-10 rounded-full border-2 border-[#111316] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3tKneSPu3wnp8E62xreUWDiN1Pnx1gAMiDC4DsMNIiOZgcqYC5I3tkf322Bf0Xgc7g2jTa-vlMDvD2yGE9s0bFm5i9kJNpWFbL6VYIiSOF7UUD_IueAGCji9L814MWXf7v1hnMoAhMhpXlOSgfzj-339RB9s5e5ZhDb1oa85km9VOUjtxQL-Ul_4aAUoPWI3aS-U390q9CdXXdIzVJPLR_RU4hsLCSp-L-74904XVh3qSK3anhTuZwwDdnaX4tGHcQGX6PCktZl4"/>
+                <img alt="User" className="w-10 h-10 rounded-full border-2 border-[#111316] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtcKYRb_Di-m5sPHd6RBGfn6s7igxAf4slpMCn623rKmjoCTQnJAY1Y85XgzlrLvJGLCN9bzxDUg_Q8Gxe8Ut8v2mlL-bZnAWAkcIPseSoGYzRvmAMEeTKjP9uGh6pAgcd9i5H1IjprFEBO5feD-vb9Xi7Ier8zrpUjajQIDLJ6BNOoBh-4Moyvre2dlLwdw_F0BJY_0Zo4s3Y3mbhYcpLCQUahbpW4_oA7-pDP20V7fUfQUC1LfMDPCkCwi1DnCYc9tdRYOXCnJ8"/>
+                <img alt="User" className="w-10 h-10 rounded-full border-2 border-[#111316] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEjpJ4IidgoQSHdcxs9eVfiEahuan9WioUNv9ZGJCK0AIU5s5fK-6F8JKdVhvEF5NKRmQkMsy5mBB6UpQfv11rbNuUNWjmHU_8TnC8_1iszxKYPcumbt86toSTs0pYX7ZkC5BgWu6Zxvw_PHvtD1eJes-Dj0K53l2RyDjFK3-NqG0b1vTyhlxJ2yaeN7y924j5ICVJ2-tFDZIzn2Y2rOm5LklZgoSQSdsCl008eavKoTbcLplzn0gcnLHUskXZKbhfjAAOJ7TGEE4"/>
               </div>
-              <div className="aspect-[16/9] bg-gradient-to-br from-primary-50 to-accent-50 flex items-center justify-center">
-                <div className="text-center">
-                  <MessageCircle className="w-24 h-24 text-primary-300 mx-auto mb-4" />
-                  <p className="text-surface-400">Preview of ChatFlow Interface</p>
-                </div>
-              </div>
+              <span className="text-sm text-[#c2c6d5]">Joined by 10,000+ teams</span>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="section bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title">Everything You Need</h2>
-            <p className="section-subtitle">
-              Powerful features designed to make your communication effortless and enjoyable.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <div 
-                key={index}
-                className="card-hover p-6 text-center group"
-              >
-                <div className={`w-14 h-14 ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4 
-                              group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className="w-7 h-7" />
+          
+          <div className="flex-1 relative w-full flex justify-center lg:justify-end mt-12 md:mt-0" style={{ perspective: '1000px' }}>
+            {/* Abstract Glow Behind Mockup */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[#508efc] rounded-full mix-blend-screen filter blur-[100px] opacity-20 pointer-events-none"></div>
+            
+            {/* Dashboard Mockup */}
+            <div 
+              className="relative w-full max-w-[500px] aspect-[4/3] rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.12)] shadow-2xl shadow-[#508efc]/10 transform -rotate-y-6 rotate-x-6 hover:rotate-0 transition-transform duration-700"
+              style={{ background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)' }}
+            >
+              {/* Mockup Header */}
+              <div className="h-12 border-b border-[rgba(255,255,255,0.12)] flex items-center px-4 justify-between bg-[#1a1c1f]/50">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-[#ffb4ab]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#FFB800]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#25C2A0]"></div>
                 </div>
-                <h3 className="text-lg font-semibold text-surface-900 mb-2">{feature.title}</h3>
-                <p className="text-surface-500 text-sm">{feature.description}</p>
+                <div className="text-xs text-[#c2c6d5] font-medium">ChatFlow Dashboard</div>
+                <div className="w-12"></div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section id="how-it-works" className="section bg-surface-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title">Get Started in Minutes</h2>
-            <p className="section-subtitle">
-              Three simple steps to start communicating with your world.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {steps.map((step, index) => (
-              <div 
-                key={index}
-                className="relative"
-              >
-                <div className="text-8xl font-bold text-surface-100 mb-4">{step.number}</div>
-                <h3 className="text-xl font-semibold text-surface-900 mb-2">{step.title}</h3>
-                <p className="text-surface-500">{step.description}</p>
-                {index < steps.length - 1 && (
-                  <ChevronRight className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 text-surface-300 w-8 h-8" />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="testimonials" className="section bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title">Loved by Thousands</h2>
-            <p className="section-subtitle">
-              See what our users are saying about ChatFlow.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={index}
-                className="card p-6"
-              >
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
-                  ))}
+              
+              {/* Mockup Content Area */}
+              <div className="flex h-[calc(100%-3rem)] bg-[#111316]/50 backdrop-blur-md">
+                {/* Sidebar Mock */}
+                <div className="w-1/3 border-r border-[rgba(255,255,255,0.12)] p-3 flex flex-col gap-3">
+                  <div className="h-8 rounded-full border border-[rgba(255,255,255,0.12)] w-full" style={{ background: 'rgba(255, 255, 255, 0.08)' }}></div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className="w-8 h-8 rounded-full bg-[#aec6ff]/20"></div>
+                    <div className="flex-col flex gap-1 flex-1">
+                      <div className="h-2 rounded bg-[#e2e2e6] w-3/4"></div>
+                      <div className="h-2 rounded bg-[#c2c6d5] w-1/2"></div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-[#c9bfff]/20"></div>
+                    <div className="flex-col flex gap-1 flex-1">
+                      <div className="h-2 rounded bg-[#c2c6d5] w-2/3"></div>
+                      <div className="h-2 rounded bg-[rgba(255,255,255,0.12)] w-1/3"></div>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-surface-600 mb-6">"{testimonial.content}"</p>
-                <div className="flex items-center gap-3">
-                  <img 
-                    src={testimonial.avatar} 
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                  <div>
-                    <p className="font-semibold text-surface-900">{testimonial.name}</p>
-                    <p className="text-sm text-surface-500">{testimonial.role}</p>
+                
+                {/* Main Chat Mock */}
+                <div className="flex-1 p-4 flex flex-col gap-4 relative">
+                  {/* Floating Video Call Pip Mock */}
+                  <div className="absolute top-4 right-4 w-24 h-32 rounded-lg border border-[rgba(255,255,255,0.12)] overflow-hidden shadow-lg shadow-black/50 z-10 bg-black" style={{ background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)' }}>
+                    <img alt="Video Call" className="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGWap6pcUI9ytnTJpWamICgh2tgYieUJz2NX7EEeXH8BiPNuc7LQANut27WnqVE073L0vEbnOQeI68NPniIvFXBepj6a4ucbHIZAMbhnDM2Wzrn7aSJ0IwLdQdWVwlIYZvaokh3l4-HlCr3iA1d2OjZcsS094rUxmwHO1xBAN57SJSYwbC51rVmMt7rArsgPrZAvn58KzL9CiOguEdmXN9i2C7SvBQK9xTHfkJb-s1Ddy1zQn7NfGNe1mPHYEIUmC700ZMZUttz_s"/>
+                  </div>
+                  
+                  <div className="flex gap-2 items-end w-3/4">
+                    <div className="w-6 h-6 rounded-full bg-[#aec6ff]/30 flex-shrink-0"></div>
+                    <div className="p-3 rounded-2xl rounded-bl-none text-xs text-[#c2c6d5] border border-[rgba(255,255,255,0.12)]" style={{ background: 'rgba(255, 255, 255, 0.08)' }}>
+                      Hey team, are we ready for the launch?
+                    </div>
+                  </div>
+                  <div className="flex gap-2 items-end w-3/4 self-end flex-row-reverse">
+                    <div className="p-3 rounded-2xl rounded-br-none text-xs text-white shadow-md" style={{ background: 'linear-gradient(135deg, #3578E5, #7B61FF)' }}>
+                      Everything is deployed and looking stable! 🚀
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary-600 to-accent-600">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Get Started?
-          </h2>
-          <p className="text-lg text-white/80 mb-8">
-            Join millions of users already enjoying seamless communication.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link 
-              to="/signup" 
-              className="w-full sm:w-auto px-8 py-4 bg-white text-primary-600 font-semibold rounded-xl hover:bg-surface-100 transition-colors"
-            >
-              Create Free Account
-            </Link>
-            <Link 
-              to="/login" 
-              className="w-full sm:w-auto px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white/10 transition-colors"
-            >
-              Sign In
-            </Link>
+        {/* Features Grid */}
+        <section className="flex flex-col gap-8 pt-8" id="features">
+          <div className="text-center max-w-2xl mx-auto flex flex-col gap-4">
+            <h2 className="text-3xl font-bold">Uncompromising Features</h2>
+            <p className="text-[#c2c6d5] text-lg">Built for speed, designed for security. Everything you need to communicate without friction.</p>
           </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-surface-900 text-surface-400 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            {/* Brand */}
-            <div className="md:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">
-                  <MessageCircle className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-xl font-bold text-white">ChatFlow</span>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {/* Feature 1 */}
+            <div className="rounded-xl p-6 flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-300 group border border-[rgba(255,255,255,0.12)]" style={{ background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)' }}>
+              <div className="w-12 h-12 rounded-full bg-[#508efc]/10 flex items-center justify-center text-[#aec6ff] group-hover:bg-[#508efc]/20 transition-colors">
+                <span className="material-symbols-outlined text-[24px]">forum</span>
               </div>
-              <p className="text-sm">
-                Beautiful, secure, and fast communication for everyone.
-              </p>
+              <h3 className="text-xl font-semibold text-[#e2e2e6]">Real-time Messaging</h3>
+              <p className="text-sm text-[#c2c6d5]">Instant delivery with zero latency. See typing indicators and read receipts in real-time.</p>
             </div>
-
-            {/* Links */}
-            <div>
-              <h4 className="font-semibold text-white mb-4">Product</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#features" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
-              </ul>
+            
+            {/* Feature 2 */}
+            <div className="rounded-xl p-6 flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-300 group border border-[rgba(255,255,255,0.12)]" style={{ background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)' }}>
+              <div className="w-12 h-12 rounded-full bg-[#451dc6]/10 flex items-center justify-center text-[#c9bfff] group-hover:bg-[#451dc6]/20 transition-colors">
+                <span className="material-symbols-outlined text-[24px]">videocam</span>
+              </div>
+              <h3 className="text-xl font-semibold text-[#e2e2e6]">HD Video Calls</h3>
+              <p className="text-sm text-[#c2c6d5]">Crystal clear video and audio. Built-in noise suppression for professional meetings.</p>
             </div>
-
-            <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-              </ul>
+            
+            {/* Feature 3 */}
+            <div className="rounded-xl p-6 flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-300 group border border-[rgba(255,255,255,0.12)]" style={{ background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)' }}>
+              <div className="w-12 h-12 rounded-full bg-[#00a484]/10 flex items-center justify-center text-[#3edeb7] group-hover:bg-[#00a484]/20 transition-colors">
+                <span className="material-symbols-outlined text-[24px]">lock</span>
+              </div>
+              <h3 className="text-xl font-semibold text-[#e2e2e6]">End-to-End Encryption</h3>
+              <p className="text-sm text-[#c2c6d5]">Military-grade security. Your conversations are private and impenetrable.</p>
             </div>
-
-            <div>
-              <h4 className="font-semibold text-white mb-4">Support</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-              </ul>
+            
+            {/* Feature 4 */}
+            <div className="rounded-xl p-6 flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-300 group border border-[rgba(255,255,255,0.12)]" style={{ background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)' }}>
+              <div className="w-12 h-12 rounded-full bg-[#93000a]/10 flex items-center justify-center text-[#ffb4ab] group-hover:bg-[#93000a]/20 transition-colors">
+                <span className="material-symbols-outlined text-[24px]">bolt</span>
+              </div>
+              <h3 className="text-xl font-semibold text-[#e2e2e6]">Lightning Fast Speed</h3>
+              <p className="text-sm text-[#c2c6d5]">Optimized global edge network ensures your data travels the shortest path.</p>
             </div>
           </div>
-
-          <div className="border-t border-surface-800 pt-8 flex flex-col md:flex-row items-center justify-between">
-            <p className="text-sm">&copy; 2024 ChatFlow. All rights reserved.</p>
-            <div className="flex items-center gap-4 mt-4 md:mt-0">
-              <CheckCircle className="w-5 h-5 text-accent-500" />
-              <span className="text-sm">End-to-end encrypted</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+        </section>
+      </main>
     </div>
   );
 }

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Active Video Call - ChatFlow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"inverse-on-surface": "#2f3034", "glass-border": "rgba(255, 255, 255, 0.12)", "primary-container": "#508efc", surface: "#111316", "secondary-fixed-dim": "#c9bfff", error: "#ffb4ab", "on-primary-container": "#00285d", "surface-bright": "#37393c", "inverse-primary": "#005ac3", "surface-container-high": "#282a2d", secondary: "#c9bfff", "on-primary-fixed": "#001a42", primary: "#aec6ff", "gradient-end": "#7B61FF", "tertiary-container": "#00a484", "on-error-container": "#ffdad6", "surface-dim": "#111316", "primary-fixed-dim": "#aec6ff", "on-background": "#e2e2e6", "glass-surface": "rgba(255, 255, 255, 0.08)", "on-secondary-container": "#b7aaff", "primary-fixed": "#d8e2ff", "on-surface-variant": "#c2c6d5", "surface-tint": "#aec6ff", "surface-container-lowest": "#0c0e11", "on-tertiary-fixed": "#002018", "inverse-surface": "#e2e2e6", "on-primary": "#002e6a", background: "#111316", "outline-variant": "#424753", "on-secondary-fixed-variant": "#451dc6", "gradient-start": "#3578E5", "on-surface": "#e2e2e6", "surface-variant": "#333538", "surface-container-highest": "#333538", tertiary: "#3edeb7", "tertiary-fixed-dim": "#3edeb7", "on-secondary-fixed": "#1a0063", "surface-container": "#1e2023", "error-container": "#93000a", "status-online": "#25C2A0", "secondary-container": "#451dc6", "secondary-fixed": "#e5deff", "tertiary-fixed": "#63fbd2", "status-busy": "#FFB800", "surface-container-low": "#1a1c1f", "danger-red": "#FF4D4F", "on-primary-fixed-variant": "#004395", outline: "#8c909f", "on-tertiary-fixed-variant": "#005140", "on-secondary": "#2e009c", "on-tertiary-container": "#003025", "on-tertiary": "#00382b", "on-error": "#690005"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-max": "1440px", "stack-xl": "32px", "stack-3xl": "64px", "margin-desktop": "40px", gutter: "24px", unit: "8px", "margin-mobile": "16px"}, fontFamily: {"title-md": ["Inter"], "display-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "label-caps": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"title-md": ["20px", {lineHeight: "28px", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-lg-mobile": ["24px", {lineHeight: "32px", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-sm": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .glass-panel {
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.7); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(255, 77, 79, 0); }
+        }
+        .animate-recording {
+            animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background h-screen w-screen overflow-hidden antialiased">
+<div class="relative w-full h-full bg-surface-container-lowest flex flex-col justify-between">
+<div class="absolute inset-0 z-0">
+<img alt="Main video feed" class="w-full h-full object-cover opacity-90" data-alt="A cinematic, high-definition webcam feed of a professional man, Jordan Smith, in a sophisticated, dimly lit home office. The lighting is moody and dramatic, featuring cool blue ambient light contrasting with a warm, subtle key light on his face. The overall aesthetic is premium, dark-mode, and hyper-realistic, reflecting a high-end video conferencing experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcPBfQSUTZvWduIWvG8xQUd9WNAY0eylTWr9O0IZ6chDcNtz5hARD3FJudwlU1t4vYwcyWF6pi8i5ZQrOmtRn82pK9m5YMY4TDCB64O_tpP8Vg2YVj8gKYmrVxUnKDrqBibRGB_hmfskLczJ5VOrKeP-q7ewEZJ4Y6PcRHwlwY8cLqnHHY635g2Q8fveLMmZQLaJPFhNuf7le6p29cUyReGghJ1UosuTCKztziwl2feaRdJv9oeMGJL8qReMTNaVesAkRobtjp28I"/>
+<div class="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background/90 pointer-events-none"></div>
+</div>
+<div class="relative z-10 w-full px-margin-mobile md:px-margin-desktop py-stack-xl flex justify-between items-start">
+<div class="flex items-center gap-unit bg-glass-surface backdrop-blur-xl border border-glass-border rounded-full p-1 pr-6 glass-panel shadow-sm transition-transform hover:scale-[1.02]">
+<img alt="Caller avatar" class="w-12 h-12 rounded-full object-cover border-2 border-surface" data-alt="A small, circular avatar portrait of Jordan Smith, matching the main video feed's lighting. Crisp, professional, and subtly integrated into the dark, glassmorphic UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc2X-a0z_x0IWB2fCoGYBYw_FGeEbAaYhu0mBj84A24ezwLV2OskE_cEvmQYeVGDr7xiPjpYFfvpgsW4zIEumI1d_jJM_aW9FnrkrPQTid_DvSo6p4q1VVeDMDm81sfpuQddJis5gsr52V5fM1clEYBgdaXaUQMTemTTTtifjfUBfTNkos72XgvVjaHdfaMot0mE1a_PoGh1L0477zBV2e6wzHoM_CT1Ckr0XyEPusQZ3qY33WvecC8diIpf0pLzbieVTdn-adGm4"/>
+<span class="font-title-md text-title-md text-on-surface">Jordan Smith</span>
+</div>
+<div class="flex items-center gap-3 bg-glass-surface backdrop-blur-xl border border-glass-border rounded-full px-4 py-2 glass-panel shadow-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant tracking-widest uppercase">In call</span>
+<div class="w-2 h-2 rounded-full bg-danger-red animate-recording"></div>
+<span class="font-label-caps text-label-caps text-on-surface tracking-widest">04:20</span>
+</div>
+</div>
+<div class="relative z-10 w-full px-margin-mobile md:px-margin-desktop py-margin-desktop flex flex-col items-end gap-stack-xl">
+<div class="w-32 md:w-48 aspect-[3/4] bg-surface-container rounded-xl overflow-hidden shadow-2xl border border-glass-border glass-panel relative group cursor-pointer transition-transform duration-300 hover:scale-105 hover:border-outline-variant">
+<img alt="Your video feed" class="w-full h-full object-cover" data-alt="A picture-in-picture webcam feed showing a young woman looking directly at the camera. The lighting is soft and flattering, set against a dark, minimalist background. The image serves as the local user's camera preview in a sleek, dark-themed communication interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhunC2eGRZAYnH80AF0H1ZjEMY6KIEFNu9D4kUgwdZMcnCZXMnMhMl-MEgkj3mFDJokGA6cVCPp26dRWTKPUAH9yhQzI2Yrq_amRMH9-tE9nQ8h4tElENcuO3W6CC6ulZfqI-wcoKTw11aEvfVoafaMF_p8IYGUg4GMKyUuCD7ASVMz_TKNsMdLef4ux7B817WSAf_K6kyhYU_W93a8ZOjSLLCZ_5p73ceiaAXmiCEUOZovSPHOabUHE2fEkIQ3FyekexLxRGKm_M"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
+<span class="material-symbols-outlined text-on-surface text-sm" style="font-variation-settings: 'FILL' 1;">switch_camera</span>
+</div>
+</div>
+<div class="w-full flex justify-center pb-stack-xl">
+<div class="flex items-center gap-gutter bg-glass-surface backdrop-blur-2xl border border-glass-border rounded-full p-2 md:p-3 glass-panel shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+<button class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-surface-variant hover:bg-surface-container-highest text-on-surface flex items-center justify-center transition-all duration-200 group relative">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+<button class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-surface-variant hover:bg-surface-container-highest text-on-surface flex items-center justify-center transition-all duration-200 group relative">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">videocam</span>
+</button>
+<div class="w-px h-8 bg-glass-border mx-1"></div>
+<button class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-danger-red hover:bg-[#ff3333] text-white flex items-center justify-center transition-all duration-200 shadow-[0_0_20px_rgba(255,77,79,0.3)] hover:shadow-[0_0_30px_rgba(255,77,79,0.5)] hover:scale-105 group">
+<span class="material-symbols-outlined group-hover:rotate-12 transition-transform" style="font-variation-settings: 'FILL' 1;">call_end</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

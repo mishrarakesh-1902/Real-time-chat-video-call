@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChatFlow - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"inverse-on-surface": "#2f3034", "glass-border": "rgba(255, 255, 255, 0.12)", "primary-container": "#508efc", surface: "#111316", "secondary-fixed-dim": "#c9bfff", error: "#ffb4ab", "on-primary-container": "#00285d", "surface-bright": "#37393c", "inverse-primary": "#005ac3", "surface-container-high": "#282a2d", secondary: "#c9bfff", "on-primary-fixed": "#001a42", primary: "#aec6ff", "gradient-end": "#7B61FF", "tertiary-container": "#00a484", "on-error-container": "#ffdad6", "surface-dim": "#111316", "primary-fixed-dim": "#aec6ff", "on-background": "#e2e2e6", "glass-surface": "rgba(255, 255, 255, 0.08)", "on-secondary-container": "#b7aaff", "primary-fixed": "#d8e2ff", "on-surface-variant": "#c2c6d5", "surface-tint": "#aec6ff", "surface-container-lowest": "#0c0e11", "on-tertiary-fixed": "#002018", "inverse-surface": "#e2e2e6", "on-primary": "#002e6a", background: "#111316", "outline-variant": "#424753", "on-secondary-fixed-variant": "#451dc6", "gradient-start": "#3578E5", "on-surface": "#e2e2e6", "surface-variant": "#333538", "surface-container-highest": "#333538", tertiary: "#3edeb7", "tertiary-fixed-dim": "#3edeb7", "on-secondary-fixed": "#1a0063", "surface-container": "#1e2023", "error-container": "#93000a", "status-online": "#25C2A0", "secondary-container": "#451dc6", "secondary-fixed": "#e5deff", "tertiary-fixed": "#63fbd2", "status-busy": "#FFB800", "surface-container-low": "#1a1c1f", "danger-red": "#FF4D4F", "on-primary-fixed-variant": "#004395", outline: "#8c909f", "on-tertiary-fixed-variant": "#005140", "on-secondary": "#2e009c", "on-tertiary-container": "#003025", "on-tertiary": "#00382b", "on-error": "#690005"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-max": "1440px", "stack-xl": "32px", "stack-3xl": "64px", "margin-desktop": "40px", gutter: "24px", unit: "8px", "margin-mobile": "16px"}, fontFamily: {"title-md": ["Inter"], "display-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "label-caps": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"title-md": ["20px", {lineHeight: "28px", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-lg-mobile": ["24px", {lineHeight: "32px", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-sm": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700"}]}}}};</script>
+<style>
+        /* Custom styles for specific effects not easily achievable with basic utility classes alone */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-glow:focus-within {
+            box-shadow: 0 0 0 1px #aec6ff, 0 0 12px rgba(174, 198, 255, 0.2);
+            border-color: transparent;
+        }
+
+        .bg-animated-gradient {
+            background-size: 200% 200%;
+            animation: gradientMove 15s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex items-center justify-center relative overflow-hidden font-body-lg">
+<!-- Ambient Background Effects -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="ambient-orb w-[600px] h-[600px] bg-primary/20 -top-[200px] -left-[100px] animate-pulse" style="animation-duration: 8s;"></div>
+<div class="ambient-orb w-[800px] h-[800px] bg-secondary-container/20 -bottom-[300px] -right-[200px] animate-pulse" style="animation-duration: 12s; animation-delay: 2s;"></div>
+</div>
+<!-- Main Content Canvas (No Nav Shell per Transactional Intent) -->
+<main class="relative z-10 w-full max-w-md px-margin-mobile md:px-0">
+<!-- Login Card -->
+<div class="glass-panel rounded-[2rem] p-8 md:p-10 flex flex-col gap-stack-xl relative overflow-hidden">
+<!-- Subtle Inner Glow Top Edge -->
+<div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+<!-- Header Section -->
+<div class="text-center flex flex-col gap-unit">
+<h1 class="font-display-lg text-display-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">ChatFlow</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Sign in to continue your conversations.</p>
+</div>
+<!-- Form Section -->
+<form class="flex flex-col gap-gutter">
+<!-- Email Input -->
+<div class="flex flex-col gap-2">
+<label class="font-body-sm text-body-sm text-on-surface-variant ml-1" for="email">Email</label>
+<div class="relative flex items-center input-glow rounded-xl bg-surface-container-high/50 border border-glass-border transition-all duration-300">
+<span class="material-symbols-outlined text-outline ml-4 absolute pointer-events-none">mail</span>
+<input class="w-full bg-transparent border-none rounded-xl py-3 pl-12 pr-4 text-on-surface placeholder:text-outline-variant focus:ring-0 font-body-lg text-body-lg" id="email" name="email" placeholder="you@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center ml-1 pr-1">
+<label class="font-body-sm text-body-sm text-on-surface-variant" for="password">Password</label>
+<a class="font-body-sm text-body-sm text-primary hover:text-primary-fixed transition-colors" href="#">Forgot?</a>
+</div>
+<div class="relative flex items-center input-glow rounded-xl bg-surface-container-high/50 border border-glass-border transition-all duration-300">
+<span class="material-symbols-outlined text-outline ml-4 absolute pointer-events-none">lock</span>
+<input class="w-full bg-transparent border-none rounded-xl py-3 pl-12 pr-12 text-on-surface placeholder:text-outline-variant focus:ring-0 font-body-lg text-body-lg" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-4 text-outline hover:text-on-surface transition-colors focus:outline-none" type="button">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="w-full mt-2 py-4 rounded-full bg-gradient-to-r from-gradient-start to-gradient-end text-white font-title-md text-title-md hover:opacity-90 active:scale-[0.98] transition-all shadow-[0_8px_20px_-6px_rgba(53,120,229,0.5)] flex justify-center items-center gap-2 group" type="submit">
+                    Log In
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="flex items-center gap-4 py-2">
+<div class="h-[1px] flex-1 bg-glass-border"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant uppercase tracking-widest">or continue with</span>
+<div class="h-[1px] flex-1 bg-glass-border"></div>
+</div>
+<!-- Social Logins -->
+<div class="flex gap-4">
+<button class="flex-1 py-3 px-4 rounded-xl glass-surface border border-glass-border hover:bg-surface-container-highest transition-colors flex justify-center items-center gap-2">
+<!-- Simple SVG placeholder for Google to avoid external requests if possible, otherwise just text -->
+<span class="font-body-lg text-body-lg font-medium text-on-surface">Google</span>
+</button>
+<button class="flex-1 py-3 px-4 rounded-xl glass-surface border border-glass-border hover:bg-surface-container-highest transition-colors flex justify-center items-center gap-2">
+<span class="font-body-lg text-body-lg font-medium text-on-surface">Apple</span>
+</button>
+</div>
+<!-- Footer Link -->
+<div class="text-center mt-2">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                    Don't have an account? 
+                    <a class="text-primary hover:text-primary-fixed font-semibold transition-colors" href="#">Sign up</a>
+</p>
+</div>
+</div>
+</main>
+<script>
+        // Simple script to toggle password visibility
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.querySelector('button[aria-label="Toggle password visibility"]');
+            const passInput = document.getElementById('password');
+            const iconSpan = toggleBtn.querySelector('.material-symbols-outlined');
+
+            if(toggleBtn && passInput && iconSpan) {
+                toggleBtn.addEventListener('click', () => {
+                    const type = passInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passInput.setAttribute('type', type);
+                    iconSpan.textContent = type === 'password' ? 'visibility_off' : 'visibility';
+                });
+            }
+        });
+    </script>
+</body></html>

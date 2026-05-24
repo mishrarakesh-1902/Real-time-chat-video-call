@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChatFlow - Connect Seamlessly</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"inverse-on-surface": "#2f3034", "glass-border": "rgba(255, 255, 255, 0.12)", "primary-container": "#508efc", surface: "#111316", "secondary-fixed-dim": "#c9bfff", error: "#ffb4ab", "on-primary-container": "#00285d", "surface-bright": "#37393c", "inverse-primary": "#005ac3", "surface-container-high": "#282a2d", secondary: "#c9bfff", "on-primary-fixed": "#001a42", primary: "#aec6ff", "gradient-end": "#7B61FF", "tertiary-container": "#00a484", "on-error-container": "#ffdad6", "surface-dim": "#111316", "primary-fixed-dim": "#aec6ff", "on-background": "#e2e2e6", "glass-surface": "rgba(255, 255, 255, 0.08)", "on-secondary-container": "#b7aaff", "primary-fixed": "#d8e2ff", "on-surface-variant": "#c2c6d5", "surface-tint": "#aec6ff", "surface-container-lowest": "#0c0e11", "on-tertiary-fixed": "#002018", "inverse-surface": "#e2e2e6", "on-primary": "#002e6a", background: "#111316", "outline-variant": "#424753", "on-secondary-fixed-variant": "#451dc6", "gradient-start": "#3578E5", "on-surface": "#e2e2e6", "surface-variant": "#333538", "surface-container-highest": "#333538", tertiary: "#3edeb7", "tertiary-fixed-dim": "#3edeb7", "on-secondary-fixed": "#1a0063", "surface-container": "#1e2023", "error-container": "#93000a", "status-online": "#25C2A0", "secondary-container": "#451dc6", "secondary-fixed": "#e5deff", "tertiary-fixed": "#63fbd2", "status-busy": "#FFB800", "surface-container-low": "#1a1c1f", "danger-red": "#FF4D4F", "on-primary-fixed-variant": "#004395", outline: "#8c909f", "on-tertiary-fixed-variant": "#005140", "on-secondary": "#2e009c", "on-tertiary-container": "#003025", "on-tertiary": "#00382b", "on-error": "#690005"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-max": "1440px", "stack-xl": "32px", "stack-3xl": "64px", "margin-desktop": "40px", gutter: "24px", unit: "8px", "margin-mobile": "16px"}, fontFamily: {"title-md": ["Inter"], "display-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "label-caps": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"title-md": ["20px", {lineHeight: "28px", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-lg-mobile": ["24px", {lineHeight: "32px", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-sm": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700"}]}}}};</script>
+<style>
+        body {
+            background-color: #111316;
+            background-image: radial-gradient(circle at top right, rgba(53, 120, 229, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(123, 97, 255, 0.15) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111316;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-card-glow {
+            position: relative;
+        }
+        .glass-card-glow::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            z-index: 1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #aec6ff, #c9bfff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .primary-gradient-bg {
+            background: linear-gradient(135deg, #3578E5, #7B61FF);
+        }
+
+        /* Float animation for dashboard preview */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased font-body-lg overflow-x-hidden min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-glass-surface backdrop-blur-xl border-b border-glass-border shadow-sm flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 transition-all duration-300" id="navbar">
+<div class="flex items-center gap-unit cursor-pointer">
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">forum</span>
+<span class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold text-primary tracking-tight">ChatFlow</span>
+</div>
+<div class="hidden md:flex items-center gap-stack-xl font-body-sm text-body-sm">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#features">Features</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#how-it-works">How it Works</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#testimonials">Testimonials</a>
+</div>
+<div class="hidden md:flex items-center gap-gutter font-body-sm text-body-sm">
+<button class="text-on-surface hover:text-primary transition-colors duration-200">Log In</button>
+<button class="primary-gradient-bg text-white px-6 py-2 rounded-full font-bold hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary-container/20">
+                Get Started
+            </button>
+</div>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</nav>
+<main class="flex-grow pt-24 md:pt-32 pb-stack-3xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full flex flex-col gap-stack-3xl">
+<!-- Hero Section -->
+<section class="flex flex-col md:flex-row items-center gap-stack-3xl min-h-[716px]">
+<div class="flex-1 flex flex-col gap-stack-xl z-10">
+<div class="inline-flex items-center gap-2 bg-glass-surface border border-glass-border rounded-full px-4 py-1.5 w-fit">
+<span class="w-2 h-2 rounded-full bg-status-online shadow-[0_0_8px_rgba(37,194,160,0.6)] animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Now in Public Beta</span>
+</div>
+<h1 class="font-display-lg text-[40px] leading-[48px] md:text-display-lg font-bold">
+                    Connect Seamlessly with <br class="hidden md:block"/>
+<span class="gradient-text">ChatFlow</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl text-lg md:text-xl">
+                    Experience lightning-fast, secure communication. Designed for high-performance teams who demand premium design and uncompromised privacy.
+                </p>
+<div class="flex flex-col sm:flex-row gap-gutter pt-unit">
+<button class="primary-gradient-bg text-white px-8 py-3 rounded-full font-bold text-lg hover:shadow-[0_0_20px_rgba(80,142,252,0.4)] active:scale-95 transition-all w-full sm:w-auto flex items-center justify-center gap-2">
+                        Start Free Trial
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<button class="glass-panel text-on-surface px-8 py-3 rounded-full font-bold text-lg hover:bg-glass-surface active:scale-95 transition-all w-full sm:w-auto border border-glass-border">
+                        Learn More
+                    </button>
+</div>
+<div class="flex items-center gap-4 mt-8 opacity-70">
+<div class="flex -space-x-3">
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-background object-cover" data-alt="A professional studio portrait headshot of a young diverse woman with natural makeup, looking directly at the camera with a confident smile. Lighting is soft and bright, emphasizing high-end corporate tech aesthetics. Background is completely neutral. Image captures a modern, approachable professional vibe matching a premium communication platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3tKneSPu3wnp8E62xreUWDiN1Pnx1gAMiDC4DsMNIiOZgcqYC5I3tkf322Bf0Xgc7g2jTa-vlMDvD2yGE9s0bFm5i9kJNpWFbL6VYIiSOF7UUD_IueAGCji9L814MWXf7v1hnMoAhMhpXlOSgfzj-339RB9s5e5ZhDb1oa85km9VOUjtxQL-Ul_4aAUoPWI3aS-U390q9CdXXdIzVJPLR_RU4hsLCSp-L-74904XVh3qSK3anhTuZwwDdnaX4tGHcQGX6PCktZl4"/>
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-background object-cover" data-alt="A professional studio portrait headshot of a handsome young man with short dark hair and a light beard, looking directly at the camera with a confident expression. Lighting is soft and bright, emphasizing high-end corporate tech aesthetics. Background is completely neutral. Image captures a modern, approachable professional vibe matching a premium communication platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtcKYRb_Di-m5sPHd6RBGfn6s7igxAf4slpMCn623rKmjoCTQnJAY1Y85XgzlrLvJGLCN9bzxDUg_Q8Gxe8Ut8v2mlL-bZnAWAkcIPseSoGYzRvmAMEeTKjP9uGh6pAgcd9i5H1IjprFEBO5feD-vb9Xi7Ier8zrpUjajQIDLJ6BNOoBh-4Moyvre2dlLwdw_F0BJY_0Zo4s3Y3mbhYcpLCQUahbpW4_oA7-pDP20V7fUfQUC1LfMDPCkCwi1DnCYc9tdRYOXCnJ8"/>
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-background object-cover" data-alt="A professional studio portrait headshot of an elegant woman with dark hair tied back, looking directly at the camera with a warm smile. Lighting is soft and bright, emphasizing high-end corporate tech aesthetics. Background is completely neutral. Image captures a modern, approachable professional vibe matching a premium communication platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEjpJ4IidgoQSHdcxs9eVfiEahuan9WioUNv9ZGJCK0AIU5s5fK-6F8JKdVhvEF5NKRmQkMsy5mBB6UpQfv11rbNuUNWjmHU_8TnC8_1iszxKYPcumbt86toSTs0pYX7ZkC5BgWu6Zxvw_PHvtD1eJes-Dj0K53l2RyDjFK3-NqG0b1vTyhlxJ2yaeN7y924j5ICVJ2-tFDZIzn2Y2rOm5LklZgoSQSdsCl008eavKoTbcLplzn0gcnLHUskXZKbhfjAAOJ7TGEE4"/>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Joined by 10,000+ teams</span>
+</div>
+</div>
+<div class="flex-1 relative w-full flex justify-center lg:justify-end mt-12 md:mt-0 perspective-1000">
+<!-- Abstract Glow Behind Mockup -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary-container rounded-full mix-blend-screen filter blur-[100px] opacity-20 pointer-events-none"></div>
+<!-- Dashboard Mockup -->
+<div class="relative w-full max-w-[500px] aspect-[4/3] glass-panel glass-card-glow rounded-2xl overflow-hidden border border-glass-border shadow-2xl shadow-primary-container/10 animate-float transform rotate-y-[-5deg] rotate-x-[5deg]">
+<!-- Mockup Header -->
+<div class="h-12 border-b border-glass-border flex items-center px-4 justify-between bg-surface-container-low/50">
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-error"></div>
+<div class="w-3 h-3 rounded-full bg-status-busy"></div>
+<div class="w-3 h-3 rounded-full bg-status-online"></div>
+</div>
+<div class="text-xs text-on-surface-variant font-medium">ChatFlow Dashboard</div>
+<div class="w-12"></div>
+</div>
+<!-- Mockup Content Area -->
+<div class="flex h-[calc(100%-3rem)] bg-surface/50 backdrop-blur-md">
+<!-- Sidebar Mock -->
+<div class="w-1/3 border-r border-glass-border p-3 flex flex-col gap-3">
+<div class="h-8 rounded-full bg-glass-surface border border-glass-border w-full"></div>
+<div class="flex items-center gap-2 mt-2">
+<div class="w-8 h-8 rounded-full bg-primary/20"></div>
+<div class="flex-col flex gap-1 flex-1">
+<div class="h-2 rounded bg-on-surface w-3/4"></div>
+<div class="h-2 rounded bg-on-surface-variant w-1/2"></div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary/20"></div>
+<div class="flex-col flex gap-1 flex-1">
+<div class="h-2 rounded bg-on-surface-variant w-2/3"></div>
+<div class="h-2 rounded bg-glass-border w-1/3"></div>
+</div>
+</div>
+</div>
+<!-- Main Chat Mock -->
+<div class="flex-1 p-4 flex flex-col gap-4 relative">
+<!-- Floating Video Call Pip Mock -->
+<div class="absolute top-4 right-4 w-24 h-32 glass-panel rounded-lg border border-glass-border overflow-hidden shadow-lg shadow-black/50 z-10 glass-card-glow bg-black">
+<img alt="Video Call" class="w-full h-full object-cover opacity-80" data-alt="A small floating window interface showing a professional video call feed. A person with glasses is looking attentively at the screen in a modern home office setting. The lighting is natural and bright, conveying a sense of high-quality HD video streaming characteristic of a premium tech application. The image has a slight tech-noir, dark-mode glassmorphism tint over it." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGWap6pcUI9ytnTJpWamICgh2tgYieUJz2NX7EEeXH8BiPNuc7LQANut27WnqVE073L0vEbnOQeI68NPniIvFXBepj6a4ucbHIZAMbhnDM2Wzrn7aSJ0IwLdQdWVwlIYZvaokh3l4-HlCr3iA1d2OjZcsS094rUxmwHO1xBAN57SJSYwbC51rVmMt7rArsgPrZAvn58KzL9CiOguEdmXN9i2C7SvBQK9xTHfkJb-s1Ddy1zQn7NfGNe1mPHYEIUmC700ZMZUttz_s"/>
+</div>
+<div class="flex gap-2 items-end w-3/4">
+<div class="w-6 h-6 rounded-full bg-primary/30 flex-shrink-0"></div>
+<div class="glass-surface p-3 rounded-2xl rounded-bl-none text-xs text-on-surface-variant border border-glass-border">
+                                    Hey team, are we ready for the launch?
+                                </div>
+</div>
+<div class="flex gap-2 items-end w-3/4 self-end flex-row-reverse">
+<div class="primary-gradient-bg p-3 rounded-2xl rounded-br-none text-xs text-white shadow-md">
+                                    Everything is deployed and looking stable! 🚀
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Grid -->
+<section class="flex flex-col gap-stack-xl pt-stack-xl" id="features">
+<div class="text-center max-w-2xl mx-auto flex flex-col gap-4">
+<h2 class="font-headline-lg text-headline-lg font-bold">Uncompromising Features</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Built for speed, designed for security. Everything you need to communicate without friction.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mt-8">
+<!-- Feature 1 -->
+<div class="glass-panel glass-card-glow rounded-xl p-6 flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-300 group">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center text-primary group-hover:bg-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">forum</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Real-time Messaging</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Instant delivery with zero latency. See typing indicators and read receipts in real-time.</p>
+</div>
+<!-- Feature 2 -->
+<div class="glass-panel glass-card-glow rounded-xl p-6 flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-300 group">
+<div class="w-12 h-12 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary group-hover:bg-secondary-container/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">videocam</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">HD Video Calls</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Crystal clear video and audio. Built-in noise suppression for professional meetings.</p>
+</div>
+<!-- Feature 3 -->
+<div class="glass-panel glass-card-glow rounded-xl p-6 flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-300 group">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/10 flex items-center justify-center text-tertiary group-hover:bg-tertiary-container/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">lock</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">End-to-End Encryption</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Military-grade security. Your conversations are private and impenetrable.</p>
+</div>
+<!-- Feature 4 -->
+<div class="glass-panel glass-card-glow rounded-xl p-6 flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-300 group">
+<div class="w-12 h-12 rounded-full bg-error-container/10 flex items-center justify-center text-error group-hover:bg-error-container/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">bolt</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Lightning Fast Speed</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Optimized global edge network ensures your data travels the shortest path.</p>
+</div>
+</div>
+</section>
+</main>
+<script>
+        // Simple nav background blur effect on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                nav.style.backgroundColor = 'rgba(17, 19, 22, 0.8)';
+            } else {
+                nav.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+            }
+        });
+    </script>
+</body></html>
