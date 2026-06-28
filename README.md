@@ -75,7 +75,8 @@
 
 > Rakesh's chat interface showing the conversation with Shalukumarmishra123 (● Online). Messages sent: "Hi..how are you", emoji burst 😂😂😂😂, a document file attachment (`dish-dashboard-video-scripts...`), and an inline image of a cyberpunk robot. Left sidebar shows Chats / Contacts tabs with search and conversation list.
 
-<img width="1568" height="757" alt="image" src="https://github.com/user-attachments/assets/76481d4e-398e-4cef-987a-6736c64cac3a" />
+<img width="1568" height="757" alt="image" src="https://github.com/user-attachments/assets/2e4084fd-1fe5-4669-9f80-51911117b8c2" />
+
 
 
 ---
