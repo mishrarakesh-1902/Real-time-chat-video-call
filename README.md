@@ -66,7 +66,8 @@
 
 > Dark navy hero with "Connect Seamlessly with ChatFlow" headline, Start Free Trial CTA, dashboard preview mockup, and social proof ("Joined by 10,000+ teams"). Nav includes Features, How it Works, Testimonials, Log In, Get Started.
 
-![ChatFlow Landing](screenshots/chatflow_landing.png)
+<img width="1512" height="787" alt="image" src="https://github.com/user-attachments/assets/3c6bbb5c-6fe6-4e28-b66e-b7063cbb84f0" />
+
 
 ---
 
@@ -74,7 +75,8 @@
 
 > Rakesh's chat interface showing the conversation with Shalukumarmishra123 (● Online). Messages sent: "Hi..how are you", emoji burst 😂😂😂😂, a document file attachment (`dish-dashboard-video-scripts...`), and an inline image of a cyberpunk robot. Left sidebar shows Chats / Contacts tabs with search and conversation list.
 
-![Chat Sender View](screenshots/chatflow_chat_sender.png)
+<img width="1568" height="757" alt="image" src="https://github.com/user-attachments/assets/76481d4e-398e-4cef-987a-6736c64cac3a" />
+
 
 ---
 
@@ -82,7 +84,8 @@
 
 > Same conversation from the receiver's side. Shows incoming messages from Rakesh with timestamps (04:11 PM, Sunday Jun 28), document file card with download button, and a partially visible image message in the thread. Multiple conversations visible in sidebar (hkdhk, RAKESH).
 
-![Chat Receiver View](screenshots/chatflow_chat_receiver.png)
+<img width="1552" height="784" alt="image" src="https://github.com/user-attachments/assets/1082b892-1c83-4a64-8b78-24b2ad32198d" />
+
 
 ---
 
@@ -90,7 +93,8 @@
 
 > Full-screen WebRTC peer-to-peer video call between Rakesh and Shalukumarmishra123. Large remote video feed, picture-in-picture local preview (bottom-right), "IN CALL ●" status indicator (top-right), and bottom control bar with Mute / Camera / End Call buttons.
 
-![Video Call](screenshots/chatflow_video_call.png)
+<img width="1568" height="762" alt="image" src="https://github.com/user-attachments/assets/e528985f-0373-443b-b212-3d27157ec1a2" />
+
 
 ---
 
